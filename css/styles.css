@@ -1,0 +1,40 @@
+/* - Favor tentar deixar organizado!
+   - Separem com comentários cada tela que for feita para facilitar a localização dos elementos css.
+   - Cuidado ao mexer com os elementos genéricos (div, img...) para não prejudicar outras telas!
+*/
+
+
+/* RESET DAS PÁGINAS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+/* CONTAINER - estou colocando esse elemento para definir uma altura e largura máxima nas telas
+façam o código dentro do container e utilizem apenas o espaço da tela disponível (sem scroll) */
+.container {
+    max-width: 1200px; /* pode ser entre 960px e 1440px. */
+    min-height: 100%;
+    margin: 0 auto;
+    padding: 0 15px; 
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+  /* impede a rolagem (scroll) no corpo da página */
+  /* CUIDADO: se o conteúdo for maior que a tela ele vai ser CORTADO */
+    overflow: hidden; 
+}
