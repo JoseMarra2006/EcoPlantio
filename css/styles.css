@@ -293,7 +293,13 @@ body {
     max-width: 35%;
 }
 
+
+
 #levels-screen {   
+    background-image: url('../itens_jogo_img/backgrouds/background1.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     display: flex;
     flex-direction: column;
     align-items: center;
