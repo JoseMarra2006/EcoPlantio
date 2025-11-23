@@ -5,13 +5,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tela de níveis</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="levels-screen">
         
-        //tela de niveis
-        //desenvolva aqui dentro do container 
+            <div class="top-buttons">
+                <button id="btn-stats" class="icon-button top-left" onclick="window.location.href='estatisticas.html'">
+                    <img src="itens_jogo_img/botoes/btn_estatisticas.png" alt="Estatísticas">
+                    <img class="legenda" src="itens_jogo_img/botoes/estatisticas.png" alt="legenda_estatisticas">
+                </button>
+            
+                <button id="btn-settings" class="icon-button top-right" onclick="window.location.href='configuracoes.html'">
+                    <img src="itens_jogo_img/botoes/btn_config.png" alt="Configurações">
+                    <img class="legenda" src="itens_jogo_img/botoes/configuracoes.png" alt="legenda_configuracoes">
+                </button>
+            </div>
+            
+            <img src="itens_jogo_img/logo_ecoplantio.png" alt="Logo EcoPlantio" class="game-logo">
+        
+        <div class="levels-container-wrapper"> 
+            <div class="levels-grid">
+                
+                <div class="level-card" id="level-1">
+                    <button class="level-button" data-level="1" data-link="fase1.html">
+                        <img id="img-level-1" src="itens_jogo_img/nivel_1/layoutNível1.png" alt="Nível 1: Preparo do Solo">
+                    </button>
+                    <img src="itens_jogo_img/starNível.png" alt="Estrela de Conclusão" class="star-icon hidden">
+                </div>
+
+                <div class="level-card" id="level-2">
+                    <button class="level-button locked" data-level="2" data-link="fase2.html" disabled>
+                        <img id="img-level-2" src="itens_jogo_img/nivel_2/layoutNível2block.png" alt="Nível 2: Plantio Bloqueado">
+                    </button>
+                    <img src="itens_jogo_img/starNível.png" alt="Estrela de Conclusão" class="star-icon hidden">
+                </div>
+
+                <div class="level-card" id="level-3">
+                    <button class="level-button locked" data-level="3" data-link="fase3.html" disabled>
+                        <img id="img-level-3" src="itens_jogo_img/nivel_3/layoutNível3Block.png" alt="Nível 3: Adubação Bloqueado">
+                    </button>
+                    <img src="itens_jogo_img/starNível.png" alt="Estrela de Conclusão" class="star-icon hidden">
+                </div>
+
+                <div class="level-card" id="level-4">
+                    <button class="level-button locked" data-level="4" data-link="fase4.html" disabled>
+                        <img id="img-level-4" src="itens_jogo_img/nivel_4/layoutNível4Block.png" alt="Nível 4: Colheita Bloqueada">
+                    </button>
+                    <img src="itens_jogo_img/starNível.png" alt="Estrela de Conclusão" class="star-icon hidden">
+                </div>
+                
+
+            </div>
+        </div>
+        <div>
+            <button class="btn-voltar" data-link="index.html">
+                <img src="itens_jogo_img/botoes/btn_voltar.png" alt="botão_voltar" >
+            </button>
+        </div>
         
     </div>
+
+    <script src="js/script.js"></script>
 </body>
 </html>
