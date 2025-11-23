@@ -5,13 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página Inicial - EcoPlantio</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="home-screen">
 
-        //Página inicial
-        //desenvolva aqui dentro do container 
+    <div class="top-buttons">
+            <button id="btn-stats" class="icon-button top-left" onclick="window.location.href='estatisticas.html'">
+                <img src="itens_jogo_img/botoes/btn_estatisticas.png" alt="Estatísticas">
+                <img class="legenda" src="itens_jogo_img/botoes/estatisticas.png" alt="legenda_estatisticas">
+            </button>
+            
+            <button id="btn-settings" class="icon-button top-right" onclick="window.location.href='configuracoes.html'">
+                <img src="itens_jogo_img/botoes/btn_config.png" alt="Configurações">
+                <img class="legenda" src="itens_jogo_img/botoes/configuracoes.png" alt="legenda_configuracoes">
+            </button>
+        </div>
+
+        <div class="logo-area">
+            <img src="itens_jogo_img/logo_ecoplantio.png" alt="Logo EcoPlantio" id="game-logo" class="pulse-animation">
+        </div>
+
+        <div class="input-area">
+            <label for="player-name">Insira seu nome aqui:</label>
+            <input type="text" id="player-name" placeholder="Nome do Jogador" maxlength="20">
+        </div>
+
+        <button id="btn-play" class="main-action-button" disabled>
+            <img src="itens_jogo_img/botoes/btn_jogar.png" alt="Jogar">
+        </button>
         
     </div>
+
+    <script src="js/script.js"></script>
 </body>
 </html>

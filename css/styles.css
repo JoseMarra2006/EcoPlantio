@@ -12,7 +12,7 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 img {
@@ -23,7 +23,7 @@ img {
 /* CONTAINER - estou colocando esse elemento para definir uma altura e largura máxima nas telas
 façam o código dentro do container e utilizem apenas o espaço da tela disponível (sem scroll) */
 .container {
-    max-width: 1200px; /* pode ser entre 960px e 1440px. */
+    max-width: 1400px; /* pode ser entre 960px e 1440px. */
     min-height: 100%;
     margin: 0 auto;
     padding: 0 15px; 
@@ -37,4 +37,155 @@ body {
   /* impede a rolagem (scroll) no corpo da página */
   /* CUIDADO: se o conteúdo for maior que a tela ele vai ser CORTADO */
     overflow: hidden; 
+}
+
+/* --- TELA INICIAL (index.html) --- */
+
+#home-screen {
+    height: 100vh;
+    width: 100%;
+    
+    background-image: url('../itens_jogo_img/backgrouds/background1.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+    position: relative; 
+}
+
+.top-buttons {
+    position: absolute;
+    width: 100%;
+    top: 20px; 
+    padding: 0 40px; 
+}
+
+.icon-button {
+    position: absolute;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: transform 0.2s;
+    margin: 0 10px;
+}
+
+.top-left {
+    left: 20px; 
+}
+
+.top-right {
+    right: 20px; 
+}
+
+.icon-button img {
+    width: 50px; 
+    height: auto;
+}
+
+.icon-button:hover img {
+    transform: scale(1.1);
+}
+
+.logo-area {
+    margin-top: -10vh; 
+    margin-bottom: 40px;
+}
+
+#game-logo {
+    max-width: 120%; 
+    height: auto;
+    display: block;
+}
+
+.pulse-animation {
+    animation: pulse 2s infinite alternate;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.7)); 
+    }
+    100% {
+        transform: scale(1.05);
+        filter: drop-shadow(0 0 20px rgba(255, 255, 255, 1));
+    }
+}
+
+.input-area {
+    margin-bottom: 50px; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input-area label {
+    font-size: 1.5em;
+    color: #0082fc;
+    text-shadow: 3px 3px 2px rgba(255, 255, 255, 0.8);
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+#player-name {
+    padding: 10px;
+    width: 80%;
+    max-width: 350px;
+    font-size: 1.4em;
+    border: 3px solid #4CAF50;
+    border-radius: 8px;
+    text-align: center;
+    background-color: rgba(255, 255, 255, 0.9); 
+    color: #333;
+}
+
+.main-action-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: opacity 0.3s, transform 0.2s;
+   
+}
+
+.main-action-button img {
+    width: 250px; 
+    height: auto;
+}
+
+.main-action-button:hover:not(:disabled) {
+    transform: scale(1.1);
+}
+
+.main-action-button:disabled {
+    opacity: 0.6; 
+    cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+    .icon-button img {
+        width: 45px;
+    }
+
+    .main-action-button img {
+        width: 200px;
+    }
+
+    .logo-area {
+        margin-top: -10vh; 
+    }
+}
+
+.legenda {
+    margin-top: 5px;
+}
+
+.legenda img {
+    max-width: 100%;
+    height: auto;
 }
