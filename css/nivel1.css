@@ -1,0 +1,30 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+.container {
+    max-width: 1400px;
+    min-height: 100%;
+    margin: 0 auto;
+    padding: 0 15px; 
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    overflow: hidden; 
+}
