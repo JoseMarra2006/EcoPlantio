@@ -4,14 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fase 3 - Adubação</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/fase3.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
 </head>
+     
 <body>
-    <div class="container">
+    <div class="container" id="watering-screen">
         
-        //fase da adubação
-        //desenvolva aqui dentro do container 
+        <div id="game-area">
+            
+            <div id="plant-grid">
+                </div>
+            
+        </div>
+
+        <div id="sidebar">
+            
+            <div class="sidebar-top">
+                <div id="timer-display">05:00</div>
+                <button id="btn-settings-game" class="game-icon-button" onclick="window.location.href='configuracoes.html'">
+                    <img src="itens_jogo_img/botoes/btn_config.png" alt="Configurações">
+                    <img src="itens_jogo_img/botoes/configuracoes.png" alt="Legenda configurações">
+                </button>
+                <button id="btn-exit-game" class="game-icon-button" onclick="window.location.href='niveis.html'">
+                    <img src="itens_jogo_img/botoes/x.png" alt="Sair da Fase">
+                </button>
+            </div>
+
+            <div class="mouse-instruction">
+                <img src="itens_jogo_img/mouse.png" alt="Mouse para selecionar">
+            </div>
+
+            <div class="plant-options">
+                <button class="plant-button" data-type="ruim">
+                    <img src="itens_jogo_img/nivel_3/agrotoxico.png" alt="Agrotoxico">
+                </button>
+                <button class="plant-button" data-type="boa">
+                    <img src="itens_jogo_img/nivel_3/adubo_organico.png" alt="Adubo Organico">
+                </button>
+            </div>
+            
+        </div>
         
     </div>
+
+    <script src="js/fase3.js"></script>
+        
 </body>
 </html>
