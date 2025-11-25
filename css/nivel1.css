@@ -29,54 +29,78 @@ body {
     overflow: hidden; 
 }
 
-/* --- FASE 1: PREPARO DO SOLO (fase1.html) --- */
-
-#fase1-screen {
-    height: 100vh;
-    width: 100%;
-    
-    /* Fundo Geral: background2.png (Ocupa toda a página) */
-    background-image: url('../itens_jogo_img/backgrouds/background2.png'); 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative; 
+/* RESET DAS PÁGINAS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* Incluído para manter a consistência do projeto */
+    font-family: 'Poppins', sans-serif;
 }
 
-#game-area-fase1 {
-    width: 90%; 
-    height: 90%;
-    
-    /* Retângulo de terra principal */
-    background-image: url('../itens_jogo_img/backgrouds/background3.png'); /* Usa o fundo de terra dentro da área */
-    background-size: cover;
-    background-position: center;
-    border-radius: 20px;
-    border: 8px solid #a0522d; 
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
-    
-    position: relative;
+img {
+    display: block;
+    max-width: 100%;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
     overflow: hidden; 
 }
 
-/* 1. BARRA DE STATUS SUPERIOR DIREITA (Temporizador, Config, X) */
+/* --- FASE 1: PREPARO DO SOLO (fase1.html) --- */
 
-#status-bar-fase1 {
-    position: absolute;
-    top: 15px;
-    right: 15px;
+#plowing-screen {
+    height: 100vh;
     display: flex;
-    align-items: flex-start; /* Alinha o temporizador e os botões */
-    gap: 5px;
-    z-index: 100;
+    justify-content: space-between;
+    align-items: stretch;
+    padding: 0;
+    max-width: none; 
 }
 
-/* Temporizador (Idêntico ao da Fase 2, ajustado para Fase 1) */
-#timer-display-fase1 {
+#game-area-fase1 {
+    width: 80%; 
+    height: 100%;
+    /* Fundo de terra arado/preparado (Imagem: unnamed.jpg) */
+    background-image: url('../unnamed.jpg'); 
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    /* Alinhando com a imagem original, ajustei o background para um padrão de solo mais simples da pasta para melhor controle dos elementos, se quiser o fundo exato use 'unnamed.jpg' */
+    background-image: url('../itens_jogo_img/backgrouds/background3.png'); 
+    background-size: 100% 100%;
+}
+
+#sidebar-fase1 {
+    width: 20%; 
+    height: 100%;
+    min-width: 200px; 
+    background-color: #d8f5d8; 
+    padding: 20px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Elementos do Topo da Sidebar (Timer e Botões) */
+.sidebar-top {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end; 
+    align-items: center;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+#timer-display {
+    position: absolute;
+    left: 10px;
     background-color: #0082fc;
     color: white;
     font-size: 1.5em;
@@ -85,8 +109,6 @@ body {
     border-radius: 5px;
     border: 3px solid #005bb5;
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
-    /* Posicionado no lado esquerdo da barra de status, que está à direita */
-    margin-right: 10px; 
 }
 
 .game-icon-button {
@@ -95,136 +117,147 @@ body {
     padding: 0;
     cursor: pointer;
     transition: transform 0.2s;
-    position: relative; /* Para posicionar o texto "configurações" */
+    margin-left: 10px;
 }
 
 .game-icon-button img {
-    width: 45px; 
+    width: 40px; 
     height: auto;
 }
 
-#status-bar-fase1 #btn-settings-game {
-     /* Adiciona o texto 'configurações' embaixo do botão de engrenagem */
-     display: flex;
-     flex-direction: column;
-     align-items: center;
+.game-icon-button:hover img {
+    transform: scale(1.1);
 }
 
-#status-bar-fase1 #btn-settings-game::after {
-    content: "configurações";
-    font-size: 0.7em;
-    color: #333;
-    white-space: nowrap;
-    margin-top: -3px;
+/* Painel de Instruções (WASD e Mouse) */
+.instruction-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+    margin-top: 50px;
 }
 
-#status-bar-fase1 .exit-x-button img {
-    width: 50px; /* O 'X' é um pouco maior na imagem */
+.control-group {
+    text-align: center;
 }
 
-/* 2. TRATOR E ARADO (Inferior Esquerdo) */
-#tractor-unit {
+.control-group img {
+    width: 100%;
+    max-width: 150px; 
+    height: auto;
+    margin: 0 auto;
+}
+
+
+/* --- Elementos do Jogo na Área de Jogo --- */
+
+#tractor-container {
     position: absolute;
-    width: 15%;
-    bottom: 5%; 
+    top: 50%; /* Posição inicial do trator (ajustada com JS) */
     left: 10%; 
-    
-    /* Alinhamento horizontal do trator e arado */
+    transform: translate(-50%, -50%);
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    transform: rotate(0deg); 
+    transition: transform 0.3s linear; /* Para movimento suave */
 }
 
-#tractor-img {
-    width: 70%;
+#tractor {
+    width: 100px; /* Tamanho do trator */
+    height: auto;
+    transform: rotate(270deg); /* Começa olhando para cima */
     position: relative;
     z-index: 2;
 }
 
-#arado-img {
-    width: 80%;
+#plow-attachment {
+    width: 120px; /* Tamanho do arado */
+    height: auto;
     position: absolute;
-    right: 50%;
-    top: 50%;
-    /* Rotacionar o arado para alinhá-lo ao trator horizontalmente */
-    transform: translateY(-50%) rotate(0deg);
+    left: -110px; /* Posicionado atrás do trator */
     z-index: 1;
+    transform: rotate(90deg); /* Alinhado horizontalmente */
 }
 
-/* 3. CAMINHO E FIM */
-#path-line {
-    position: absolute;
-    width: 90%; 
-    height: 80%; 
-    object-fit: contain;
-    /* Posição para cobrir o zig-zag da imagem */
-    top: 0;
-    left: 0;
-    transform: rotate(0deg); 
-    /* Esta imagem (flexa.png) não é o caminho completo, mas será usada como placeholder */
-    opacity: 0.6; 
-}
+/* Rotaciona o arado junto com o trator para todas as direções */
+.facing-up #tractor { transform: rotate(0deg); }
+.facing-up #plow-attachment { left: 0; top: -100px; transform: rotate(0deg); } 
 
-#end-text {
-    position: absolute;
-    width: 10%;
-    top: 5%;
-    left: 5%;
-    z-index: 5;
-}
+.facing-down #tractor { transform: rotate(180deg); }
+.facing-down #plow-attachment { left: 0; top: 100px; transform: rotate(180deg); } 
 
-/* 4. OBSTÁCULOS (Simulação de Pedras e Gravetos) */
+.facing-left #tractor { transform: rotate(270deg); }
+.facing-left #plow-attachment { left: -100px; top: 0; transform: rotate(270deg); } 
+
+.facing-right #tractor { transform: rotate(90deg); }
+.facing-right #plow-attachment { left: 100px; top: 0; transform: rotate(90deg); } 
+
+
+/* Obstáculos (Pedras e Gravetos) */
 .obstacle {
     position: absolute;
     cursor: pointer;
+    background-size: contain;
+    background-repeat: no-repeat;
+    transition: opacity 0.3s;
     z-index: 5;
-    /* Estilos para obstáculos */
-    width: 50px; /* Tamanho base */
-    height: 50px;
 }
 
-/* Ajustes visuais (Simulação de Pedras e Gravetos) */
+/* Estilo para Pedras (Rock) - Simulação do ícone de pedra */
 .obstacle.rock {
-    background-color: #6d6d6d; 
+    width: 40px;
+    height: 40px;
+    /* Usei um placeholder de cor cinza para simular a pedra, 
+    já que não há um arquivo de pedra na lista de itens, apenas na imagem de fundo. 
+    Se você tiver a imagem, substitua o background-color. */
+    background-color: #6c757d; 
     border-radius: 50%;
-    box-shadow: inset 0 -2px 2px rgba(0, 0, 0, 0.5);
-    /* Nota: Se tiver a imagem da pedra, use background-image: url('pedra.png') */
 }
+
+/* Estilo para Gravetos (Stick) - Simulação do ícone de graveto */
 .obstacle.stick {
+    width: 50px;
+    height: 20px;
+    /* Usei um placeholder de cor marrom para simular o graveto. */
     background-color: #8b4513; 
-    width: 70px;
-    height: 15px;
-    border-radius: 5px;
-    transform: rotate(-30deg);
-    /* Nota: Se tiver a imagem do galho, use background-image: url('galho.png') */
+    transform: rotate(45deg);
 }
-/* Reposicionando os obstáculos de forma mais fiel à imagem */
-#obs-rock-1 { top: 20%; left: 60%; }
-#obs-rock-2 { top: 35%; right: 10%; }
-#obs-rock-3 { top: 60%; left: 20%; }
-#obs-stick-1 { top: 45%; left: 45%; transform: rotate(15deg); width: 50px; height: 10px; }
-#obs-stick-2 { top: 75%; right: 30%; transform: rotate(40deg); width: 60px; height: 12px; }
 
+.obstacle.removed {
+    opacity: 0;
+    pointer-events: none; /* Não pode ser clicado após a remoção */
+}
 
-/* 5. CONTROLE WASD (Lateral Direita) */
-#wasd-controls {
+/* Pista de Caminho (Flechas) */
+#track-path {
     position: absolute;
-    width: 10%;
-    top: 50%; /* Altura média */
-    right: 5%; /* Próximo à borda direita */
-    z-index: 10;
-}
-
-/* 6. INSTRUÇÃO DO MOUSE (Inferior Direita) */
-#mouse-instruction-fase1 {
-    position: absolute;
-    width: 10%;
-    bottom: 5%;
-    right: 5%;
-    z-index: 10;
-}
-#mouse-instruction-fase1 img {
     width: 100%;
+    height: 100%;
+    opacity: 0.5;
+}
+
+.path-segment {
+    position: absolute;
+    width: 150px;
+    height: 50px;
+    object-fit: contain;
+}
+/* Posicionamento dos segmentos do caminho (Ajuste fino necessário para corresponder à imagem) */
+.segment-1 { top: 50px; left: 10%; transform: rotate(90deg); } 
+.segment-2 { top: 50px; left: 30%; transform: rotate(180deg); width: 450px; } /* Horizontal mais longo */
+.segment-3 { top: 50px; right: 10%; transform: rotate(-90deg); } 
+.segment-4 { top: 100px; right: 10%; transform: rotate(180deg); width: 700px; }
+.segment-5 { top: 100px; left: 10%; transform: rotate(90deg); }
+.segment-6 { top: 200px; left: 10%; transform: rotate(0deg); width: 450px; }
+.segment-7 { top: 200px; left: 45%; transform: rotate(-90deg); }
+.segment-8 { top: 300px; left: 45%; transform: rotate(180deg); width: 700px; }
+.segment-9 { bottom: 50px; left: 10%; transform: rotate(-90deg); } 
+
+#end-marker {
+    position: absolute;
+    top: 50px; 
+    left: 5%; 
+    width: 100px;
     height: auto;
+    z-index: 10;
 }
