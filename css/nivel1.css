@@ -1,8 +1,10 @@
-
+/* RESET DAS PÁGINAS */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    /* Incluído para manter a consistência do projeto */
+    font-family: 'Poppins', sans-serif;
 }
 
 body {
@@ -29,28 +31,6 @@ body {
     overflow: hidden; 
 }
 
-/* RESET DAS PÁGINAS */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    /* Incluído para manter a consistência do projeto */
-    font-family: 'Poppins', sans-serif;
-}
-
-img {
-    display: block;
-    max-width: 100%;
-}
-
-html, body {
-    height: 100%;
-}
-
-body {
-    overflow: hidden; 
-}
-
 /* --- FASE 1: PREPARO DO SOLO (fase1.html) --- */
 
 #plowing-screen {
@@ -65,14 +45,11 @@ body {
 #game-area-fase1 {
     width: 80%; 
     height: 100%;
-    /* Fundo de terra arado/preparado (Imagem: unnamed.jpg) */
-    background-image: url('../unnamed.jpg'); 
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    /* Alinhando com a imagem original, ajustei o background para um padrão de solo mais simples da pasta para melhor controle dos elementos, se quiser o fundo exato use 'unnamed.jpg' */
+    /* Fundo de terra arado/preparado */
     background-image: url('../itens_jogo_img/backgrouds/background3.png'); 
     background-size: 100% 100%;
+    background-position: center;
+    position: relative;
 }
 
 #sidebar-fase1 {
@@ -135,7 +112,7 @@ body {
     flex-direction: column;
     gap: 40px;
     align-items: center;
-    margin-top: 50px;
+    margin-top: 120px;
 }
 
 .control-group {
@@ -144,7 +121,7 @@ body {
 
 .control-group img {
     width: 100%;
-    max-width: 150px; 
+    max-width: 70px; 
     height: auto;
     margin: 0 auto;
 }
@@ -165,7 +142,7 @@ body {
 #tractor {
     width: 100px; /* Tamanho do trator */
     height: auto;
-    transform: rotate(270deg); /* Começa olhando para cima */
+    transform: rotate(270deg); /* Começa olhando para esquerda (padrão da imagem) */
     position: relative;
     z-index: 2;
 }
@@ -174,7 +151,7 @@ body {
     width: 120px; /* Tamanho do arado */
     height: auto;
     position: absolute;
-    left: -110px; /* Posicionado atrás do trator */
+    left: -110px; /* Posicionado atrás do trator (para a esquerda) */
     z-index: 1;
     transform: rotate(90deg); /* Alinhado horizontalmente */
 }
@@ -193,7 +170,7 @@ body {
 .facing-right #plow-attachment { left: 100px; top: 0; transform: rotate(90deg); } 
 
 
-/* Obstáculos (Pedras e Gravetos) */
+/* Obstáculos (Pedras e Gravetos) - ATUALIZADO COM IMAGENS REAIS */
 .obstacle {
     position: absolute;
     cursor: pointer;
@@ -203,24 +180,21 @@ body {
     z-index: 5;
 }
 
-/* Estilo para Pedras (Rock) - Simulação do ícone de pedra */
 .obstacle.rock {
-    width: 40px;
-    height: 40px;
-    /* Usei um placeholder de cor cinza para simular a pedra, 
-    já que não há um arquivo de pedra na lista de itens, apenas na imagem de fundo. 
-    Se você tiver a imagem, substitua o background-color. */
-    background-color: #6c757d; 
-    border-radius: 50%;
+    width: 60px; 
+    height: 60px;
+    background-image: url('../itens_jogo_img/nivel_1/pedra.png'); 
+    background-color: transparent; 
+    border-radius: 0; 
+    transform: none; 
 }
 
-/* Estilo para Gravetos (Stick) - Simulação do ícone de graveto */
 .obstacle.stick {
-    width: 50px;
-    height: 20px;
-    /* Usei um placeholder de cor marrom para simular o graveto. */
-    background-color: #8b4513; 
-    transform: rotate(45deg);
+    width: 50px; 
+    height: 50px;
+    background-image: url('../itens_jogo_img/nivel_1/galho.png'); 
+    background-color: transparent; 
+    transform: none;
 }
 
 .obstacle.removed {

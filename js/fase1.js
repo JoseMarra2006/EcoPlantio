@@ -11,15 +11,15 @@ let startTimeF1 = null;
 let tractorX = 10; // Posição inicial X (em %)
 let tractorY = 50; // Posição inicial Y (em %)
 let isMoving = false;
-let currentDirection = 'up'; // Direção inicial para aplicar as classes CSS
+let currentDirection = 'left'; // Direção inicial para aplicar as classes CSS (Esquerda)
 let obstaclesRemoved = 0;
 let totalObstacles = 0;
 let isLevelOver = false;
 
 // Elementos DOM
-const tractorContainer = document.getElementById('tractor-container');
-const gameArea = document.getElementById('game-area-fase1');
-const timerDisplay = document.getElementById('timer-display');
+let tractorContainer = null;
+let gameArea = null;
+let timerDisplay = null;
 const obstacles = [];
 
 function getTractorCenter() {
@@ -58,24 +58,28 @@ function moveTractor(direction) {
 
     switch (direction) {
         case 'up':
+        case 'UP':
             newY -= stepY;
             currentDirection = 'up';
             break;
         case 'down':
+        case 'DOWN':
             newY += stepY;
             currentDirection = 'down';
             break;
         case 'left':
+        case 'LEFT':
             newX -= stepX;
             currentDirection = 'left';
             break;
         case 'right':
+        case 'RIGHT':
             newX += stepX;
             currentDirection = 'right';
             break;
     }
 
-    // Verifica Limites (0% a 100% da área de jogo)
+    // Verifica Limites (5% a 95% da área de jogo)
     if (newX >= 5 && newX <= 95 && newY >= 5 && newY <= 95) {
         tractorX = newX;
         tractorY = newY;
@@ -177,21 +181,28 @@ function calculateScoreF1(durationSeconds) {
     let stars = 0;
     let performance = "requer atenção redobrada";
     
-    // Tempo limite é 300 segundos (5 minutos)
-    if (durationSeconds <= 60 && totalObstacles === obstaclesRemoved) { // 1 minuto
-        stars = 3;
-        performance = "bom";
-    } else if (durationSeconds <= 120 && totalObstacles === obstaclesRemoved) { // 2 minutos
-        stars = 2;
-        performance = "regular";
-    } else if (durationSeconds < 300 && totalObstacles === obstaclesRemoved) { // 3 a 5 minutos
-        stars = 1;
-        performance = "necessita acompanhamento";
-    }
-    
+    // Se não removeu todos os obstáculos, não ganha estrelas
     if (totalObstacles !== obstaclesRemoved) {
         stars = 0;
         performance = "requer atenção redobrada";
+        return { durationSeconds, obstaclesRemoved, totalObstacles, stars, performance };
+    }
+    
+    // Pontuação baseada no tempo, apenas se completou (removeu todos os obstáculos)
+    // 3 estrelas: <= 1 minuto (60s)
+    if (durationSeconds <= 60) {
+        stars = 3;
+        performance = "bom";
+    } 
+    // 2 estrelas: <= 2 minutos (120s)
+    else if (durationSeconds <= 120) { 
+        stars = 2;
+        performance = "regular";
+    } 
+    // 1 estrela: antes de 5 minutos (300s)
+    else if (durationSeconds < 300) { 
+        stars = 1;
+        performance = "necessita acompanhamento";
     }
 
     return { durationSeconds, obstaclesRemoved, totalObstacles, stars, performance };
@@ -203,6 +214,7 @@ function endLevelF1(completed) {
     clearInterval(timerIntervalF1);
     document.removeEventListener('keydown', handleKeyDown);
 
+    // Se completou, usa o tempo real. Se esgotou, usa o tempo limite.
     const durationSeconds = completed ? Math.round((Date.now() - startTimeF1) / 1000) : TIME_LIMIT_F1;
     const { stars, performance } = calculateScoreF1(durationSeconds);
 
@@ -218,14 +230,19 @@ Estrelas Ganhas: ${stars}
 =========================================
     `;
     
-    // 2. Simula o download do arquivo TXT (Função de script.js)
+    // 2. Simula o download do arquivo TXT (Função que deve estar em script.js)
     console.log("Estatísticas do Nível 1 geradas:", statsContent);
-    downloadStatsFile(statsContent, 'estatisticas_nivel1.txt');
+    // Presumindo que downloadStatsFile está disponível via script.js
+    if (typeof downloadStatsFile === 'function') {
+        downloadStatsFile(statsContent, 'estatisticas_nivel1.txt');
+    }
 
     // 3. Simula o avanço de nível (Desbloqueia o Nível 2)
-    // Note: A função 'unlockNextLevel' está no script.js
+    // Presumindo que unlockNextLevel está disponível via script.js
     if (stars > 0) {
-        unlockNextLevel(2); 
+        if (typeof unlockNextLevel === 'function') {
+            unlockNextLevel(2); 
+        }
     }
 
     alert(`Nível 1 Finalizado!
@@ -239,8 +256,14 @@ Estrelas Ganhas: ${stars}
 }
 
 function initializePlowingScreen() {
-    if (!document.getElementById('plowing-screen')) return;
-
+    const plowingScreen = document.getElementById('plowing-screen');
+    if (!plowingScreen) return;
+    
+    // Inicializa elementos DOM
+    tractorContainer = document.getElementById('tractor-container');
+    gameArea = document.getElementById('game-area-fase1');
+    timerDisplay = document.getElementById('timer-display');
+    
     // Inicializa a posição do trator
     updateTractorPosition();
     
@@ -251,13 +274,6 @@ function initializePlowingScreen() {
     obstacleElements.forEach(obs => {
         obs.addEventListener('click', () => handleObstacleClick(obs));
         obstacles.push(obs);
-        
-        // Aplica o background da imagem original para simular o obstáculo (pedra ou graveto)
-        if (obs.getAttribute('data-type') === 'rock') {
-             // Placeholder: Adicione uma imagem real de pedra se tiver
-        } else if (obs.getAttribute('data-type') === 'stick') {
-             // Placeholder: Adicione uma imagem real de graveto se tiver
-        }
     });
 
     // Configura os controles de teclado
