@@ -2,16 +2,17 @@
 const TIME_LIMIT_F1 = 5 * 60; // 5 minutos em segundos
 const TRACTOR_SPEED = 5; // Pixels por movimento
 const OBSTACLE_CLICK_RADIUS = 70; // Raio de proximidade para remover obstáculo (em pixels)
-const FINISH_LINE_POS_X = 50; // Posição X da linha de chegada (em pixels do lado esquerdo)
-const FINISH_LINE_POS_Y = 50; // Posição Y da linha de chegada (em pixels do topo)
 
 let timeRemainingF1 = TIME_LIMIT_F1;
 let timerIntervalF1 = null;
 let startTimeF1 = null;
-let tractorX = 10; // Posição inicial X (em %)
-let tractorY = 50; // Posição inicial Y (em %)
+
+// Posição Inicial: Canto Inferior Esquerdo (alinhado com a Linha 1)
+let tractorX = 5;  // %
+let tractorY = 82; // % 
+
 let isMoving = false;
-let currentDirection = 'left'; // Direção inicial para aplicar as classes CSS (Esquerda)
+let currentDirection = 'right'; // Começa indo para a direita
 let obstaclesRemoved = 0;
 let totalObstacles = 0;
 let isLevelOver = false;
@@ -51,7 +52,7 @@ function moveTractor(direction) {
     let newX = tractorX;
     let newY = tractorY;
 
-    // Converte % para pixels temporariamente para verificação de limites
+    // Converte % para pixels temporariamente para verificação de limites e velocidade
     const gameRect = gameArea.getBoundingClientRect();
     const stepX = (TRACTOR_SPEED / gameRect.width) * 100;
     const stepY = (TRACTOR_SPEED / gameRect.height) * 100;
@@ -79,8 +80,8 @@ function moveTractor(direction) {
             break;
     }
 
-    // Verifica Limites (5% a 95% da área de jogo)
-    if (newX >= 5 && newX <= 95 && newY >= 5 && newY <= 95) {
+    // Verifica Limites (Margem de segurança para não sair da tela)
+    if (newX >= 2 && newX <= 98 && newY >= 2 && newY <= 98) {
         tractorX = newX;
         tractorY = newY;
         updateTractorPosition();
@@ -104,7 +105,7 @@ function checkFinishLine() {
     const distance = Math.sqrt(Math.pow(tractorCenter.x - endX, 2) + Math.pow(tractorCenter.y - endY, 2));
 
     // Se a distância for pequena e todos os obstáculos foram removidos
-    if (distance < 50 && totalObstacles === obstaclesRemoved) { 
+    if (distance < 60 && totalObstacles === obstaclesRemoved) { 
         clearInterval(timerIntervalF1);
         endLevelF1(true);
     }
@@ -130,7 +131,7 @@ function handleObstacleClick(obstacleElement) {
         obstaclesRemoved++;
         console.log(`Obstáculo removido! Total removido: ${obstaclesRemoved}/${totalObstacles}`);
     } else {
-        alert('Você precisa estar mais perto do obstáculo para removê-lo!');
+        alert('Chegue mais perto com o trator para remover este obstáculo!');
     }
 }
 
@@ -188,19 +189,14 @@ function calculateScoreF1(durationSeconds) {
         return { durationSeconds, obstaclesRemoved, totalObstacles, stars, performance };
     }
     
-    // Pontuação baseada no tempo, apenas se completou (removeu todos os obstáculos)
-    // 3 estrelas: <= 1 minuto (60s)
+    // Pontuação baseada no tempo
     if (durationSeconds <= 60) {
         stars = 3;
         performance = "bom";
-    } 
-    // 2 estrelas: <= 2 minutos (120s)
-    else if (durationSeconds <= 120) { 
+    } else if (durationSeconds <= 120) { 
         stars = 2;
         performance = "regular";
-    } 
-    // 1 estrela: antes de 5 minutos (300s)
-    else if (durationSeconds < 300) { 
+    } else if (durationSeconds < 300) { 
         stars = 1;
         performance = "necessita acompanhamento";
     }
@@ -214,11 +210,10 @@ function endLevelF1(completed) {
     clearInterval(timerIntervalF1);
     document.removeEventListener('keydown', handleKeyDown);
 
-    // Se completou, usa o tempo real. Se esgotou, usa o tempo limite.
     const durationSeconds = completed ? Math.round((Date.now() - startTimeF1) / 1000) : TIME_LIMIT_F1;
     const { stars, performance } = calculateScoreF1(durationSeconds);
 
-    // 1. Gera o conteúdo do arquivo TXT (Estatísticas Detalhadas)
+    // 1. Gera o conteúdo do arquivo TXT
     const statsContent = `
 NÍVEL 1 - PREPARO DO SOLO
 =========================================
@@ -230,15 +225,13 @@ Estrelas Ganhas: ${stars}
 =========================================
     `;
     
-    // 2. Simula o download do arquivo TXT (Função que deve estar em script.js)
+    // 2. Download do arquivo
     console.log("Estatísticas do Nível 1 geradas:", statsContent);
-    // Presumindo que downloadStatsFile está disponível via script.js
     if (typeof downloadStatsFile === 'function') {
         downloadStatsFile(statsContent, 'estatisticas_nivel1.txt');
     }
 
-    // 3. Simula o avanço de nível (Desbloqueia o Nível 2)
-    // Presumindo que unlockNextLevel está disponível via script.js
+    // 3. Desbloqueia o próximo nível
     if (stars > 0) {
         if (typeof unlockNextLevel === 'function') {
             unlockNextLevel(2); 
@@ -251,7 +244,6 @@ Estrelas Ganhas: ${stars}
     Estrelas: ${stars} (${performance})
     Redirecionando para a tela de Níveis...`);
 
-    // Redireciona para a tela de Níveis
     window.location.href = 'niveis.html';
 }
 
