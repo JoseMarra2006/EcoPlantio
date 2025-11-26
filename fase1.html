@@ -4,14 +4,72 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fase 1 - Preparo do Solo</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/fase1.css"> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="plowing-screen">
         
-        //fase do preparo do solo
-        //desenvolva aqui dentro do container 
+        <div id="game-area-fase1">
+            <div id="track-path">
+                <img src="itens_jogo_img/nivel_1/flexa.png" alt="Seta do Caminho" class="path-segment segment-1">
+                <img src="itens_jogo_img/nivel_1/flexa.png" alt="Seta do Caminho" class="path-segment segment-2 vertical">
+                <img src="itens_jogo_img/nivel_1/flexa.png" alt="Seta do Caminho" class="path-segment segment-3">
+                <img src="itens_jogo_img/nivel_1/flexa.png" alt="Seta do Caminho" class="path-segment segment-4 vertical">
+                <img src="itens_jogo_img/nivel_1/flexa.png" alt="Seta do Caminho" class="path-segment segment-5">
+                <img src="itens_jogo_img/nivel_1/flexa.png" alt="Seta do Caminho" class="path-segment segment-6 vertical">
+                <img src="itens_jogo_img/nivel_1/flexa.png" alt="Seta do Caminho" class="path-segment segment-7">
+                <img src="itens_jogo_img/nivel_1/flexa.png" alt="Seta do Caminho" class="path-segment segment-8 vertical">
+                <img src="itens_jogo_img/nivel_1/flexa.png" alt="Seta do Caminho" class="path-segment segment-9">
+            </div>
+
+            <img src="itens_jogo_img/nivel_1/fim.png" alt="Fim do Nível" id="end-marker">
+            
+            <div id="tractor-container">
+                <img src="itens_jogo_img/nivel_1/Arado.png" alt="Arado" id="plow-attachment">
+                <img src="itens_jogo_img/nivel_1/trator.png" alt="Trator" id="tractor">
+            </div>
+
+            <div class="obstacle rock" data-type="rock" style="top: 80px; left: 350px;"></div>
+            <div class="obstacle stick" data-type="stick" style="top: 150px; left: 550px;"></div>
+            <div class="obstacle rock" data-type="rock" style="top: 250px; left: 600px;"></div>
+            <div class="obstacle stick" data-type="stick" style="top: 300px; left: 300px;"></div>
+            <div class="obstacle rock" data-type="rock" style="top: 400px; left: 550px;"></div>
+            <div class="obstacle stick" data-type="stick" style="top: 450px; left: 350px;"></div>
+            <div class="obstacle rock" data-type="rock" style="top: 150px; right: 100px;"></div>
+            <div class="obstacle stick" data-type="stick" style="top: 220px; right: 200px;"></div>
+            <div class="obstacle rock" data-type="rock" style="top: 380px; right: 50px;"></div>
+        </div>
+
+        <div id="sidebar-fase1">
+            
+            <div class="sidebar-top">
+                <div id="timer-display">05:00</div>
+                <button id="btn-settings-game" class="game-icon-button" onclick="window.location.href='configuracoes.html'">
+                    <img src="itens_jogo_img/botoes/btn_config.png" alt="Configurações">
+                </button>
+                <button id="btn-exit-game" class="game-icon-button" onclick="window.location.href='niveis.html'">
+                    <img src="itens_jogo_img/botoes/x.png" alt="Sair da Fase">
+                </button>
+            </div>
+
+            <div class="instruction-panel">
+                <div class="control-group">
+                    <img src="itens_jogo_img/WASD.png" alt="Controles WASD">
+                </div>
+                
+                <div class="control-group">
+                    <img src="itens_jogo_img/mouse.png" alt="Mouse para selecionar">
+                </div>
+            </div>
+            
+        </div>
         
     </div>
+
+    <script src="js/fase1.js"></script> 
+    <script src="js/script.js"></script> 
 </body>
 </html>
