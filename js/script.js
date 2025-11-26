@@ -60,7 +60,7 @@ function initializeLevelsScreen() {
     const baseImagePath = 'itens_jogo_img/nivel_';
     
     const levelData = {
-        1: { name: 'Preparo do Solo', link: 'fase1.html' },
+        1: { name: 'Preparo do Solo', link: 'demo_fase1.html' },
         2: { name: 'Plantio', link: 'demo_fase2.html' },
         3: { name: 'Adubação', link: 'fase3.html' },
         4: { name: 'Colheita', link: 'fase4.html' }

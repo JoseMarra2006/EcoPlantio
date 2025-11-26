@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demonstração do Nível</title>
+    <link rel="stylesheet" href="css/fase2.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container" id="demo-screen">
+
+        <div class="top-buttons">      
+            <button id="btn-settings" class="icon-button top-right" onclick="window.location.href='configuracoes.html'">
+                <img src="itens_jogo_img/botoes/btn_config.png" alt="Configurações">
+                <img class="legenda" src="itens_jogo_img/botoes/configuracoes.png" alt="legenda_configuracoes">
+            </button>
+        </div>
+        
+        <img src="itens_jogo_img/logo_ecoplantio.png" alt="Logo EcoPlantio" id="settings-logo" class="pulse-animation">
+        
+
+        <div id="video-placeholder">
+            <button class="icon-button-demo" onclick="window.location.href='niveis.html'">
+                <img src="itens_jogo_img/botoes/x.png" alt="Sair">
+            </button>
+        </div>
+
+        <button id="btn-skip" class="main-action-button skip-button" onclick="window.location.href='fase1.html'">
+            <img src="itens_jogo_img/botoes/btn_pular.png" alt="Pular Tutorial">
+        </button>
+        
+    </div>
+    
+    <script src="js/script.js"></script>
+</body>
+</html>
