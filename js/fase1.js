@@ -1,13 +1,13 @@
 // Constantes do Nível 1
 const TIME_LIMIT_F1 = 5 * 60; // 5 minutos em segundos
 const TRACTOR_SPEED = 5; // Pixels por movimento
-const OBSTACLE_CLICK_RADIUS = 70; // Raio de proximidade para remover obstáculo (em pixels)
+const OBSTACLE_CLICK_RADIUS = 150; // Raio de clique
+const COLLISION_RADIUS = 105; // Raio de colisão
 
 let timeRemainingF1 = TIME_LIMIT_F1;
 let timerIntervalF1 = null;
-let startTimeF1 = null;
 
-// Posição Inicial: Canto Inferior Esquerdo (alinhado com a Linha 1)
+// Posição Inicial: Canto Inferior Esquerdo
 let tractorX = 5;  // %
 let tractorY = 82; // % 
 
@@ -16,11 +16,13 @@ let currentDirection = 'right'; // Começa indo para a direita
 let obstaclesRemoved = 0;
 let totalObstacles = 0;
 let isLevelOver = false;
+let isGamePaused = false; 
 
 // Elementos DOM
 let tractorContainer = null;
 let gameArea = null;
 let timerDisplay = null;
+let btnPause = null; 
 const obstacles = [];
 
 function getTractorCenter() {
@@ -28,7 +30,6 @@ function getTractorCenter() {
     const gameRect = gameArea.getBoundingClientRect();
     const tractorRect = tractorContainer.getBoundingClientRect();
     
-    // Calcula o centro do trator na área de jogo
     return {
         x: tractorRect.left + tractorRect.width / 2 - gameRect.left,
         y: tractorRect.top + tractorRect.height / 2 - gameRect.top
@@ -40,19 +41,45 @@ function updateTractorPosition() {
         tractorContainer.style.left = `${tractorX}%`;
         tractorContainer.style.top = `${tractorY}%`;
         
-        // Atualiza a classe de direção para o CSS
         tractorContainer.className = '';
         tractorContainer.classList.add(`facing-${currentDirection}`);
     }
 }
 
+// Função para verificar colisão com obstáculos ativos
+function checkCollision(newXPercent, newYPercent) {
+    if (!gameArea) return false;
+
+    const gameRect = gameArea.getBoundingClientRect();
+    // Converte a posição proposta (%) para pixels relativos à área de jogo
+    const proposedPixelX = (newXPercent / 100) * gameRect.width;
+    const proposedPixelY = (newYPercent / 100) * gameRect.height;
+
+    for (const obs of obstacles) {
+        // Ignora obstáculos já removidos
+        if (obs.classList.contains('removed')) continue;
+
+        const obsRect = obs.getBoundingClientRect();
+        // Centro do obstáculo relativo à área de jogo
+        const obsCenterX = (obsRect.left + obsRect.width / 2) - gameRect.left;
+        const obsCenterY = (obsRect.top + obsRect.height / 2) - gameRect.top;
+
+        // Distância entre o centro proposto do trator e o centro do obstáculo
+        const dist = Math.sqrt(Math.pow(proposedPixelX - obsCenterX, 2) + Math.pow(proposedPixelY - obsCenterY, 2));
+
+        if (dist < COLLISION_RADIUS) {
+            return true; // Colisão detectada
+        }
+    }
+    return false;
+}
+
 function moveTractor(direction) {
-    if (isLevelOver) return;
+    if (isLevelOver || isGamePaused) return; 
 
     let newX = tractorX;
     let newY = tractorY;
 
-    // Converte % para pixels temporariamente para verificação de limites e velocidade
     const gameRect = gameArea.getBoundingClientRect();
     const stepX = (TRACTOR_SPEED / gameRect.width) * 100;
     const stepY = (TRACTOR_SPEED / gameRect.height) * 100;
@@ -80,12 +107,17 @@ function moveTractor(direction) {
             break;
     }
 
-    // Verifica Limites (Margem de segurança para não sair da tela)
-    if (newX >= 2 && newX <= 98 && newY >= 2 && newY <= 98) {
-        tractorX = newX;
-        tractorY = newY;
-        updateTractorPosition();
-        checkFinishLine();
+    // Verifica Limites E Colisão
+    // ALTERAÇÃO AQUI: newX <= 85 impede invasão da barra lateral
+    if (newX >= 2 && newX <= 85 && newY >= 2 && newY <= 95) {
+        if (!checkCollision(newX, newY)) {
+            tractorX = newX;
+            tractorY = newY;
+            updateTractorPosition();
+            checkFinishLine();
+        } else {
+            // Opcional: Feedback de colisão
+        }
     }
 }
 
@@ -97,46 +129,39 @@ function checkFinishLine() {
     const endRect = endMarker.getBoundingClientRect();
     const gameRect = gameArea.getBoundingClientRect();
 
-    // Centro do marcador de FIM (absoluto na área de jogo)
     const endX = endRect.left + endRect.width / 2 - gameRect.left;
     const endY = endRect.top + endRect.height / 2 - gameRect.top;
 
-    // Distância do trator para o FIM
     const distance = Math.sqrt(Math.pow(tractorCenter.x - endX, 2) + Math.pow(tractorCenter.y - endY, 2));
 
-    // Se a distância for pequena e todos os obstáculos foram removidos
-    if (distance < 60 && totalObstacles === obstaclesRemoved) { 
+    if (distance < 150) { 
         clearInterval(timerIntervalF1);
         endLevelF1(true);
     }
 }
 
-
 function handleObstacleClick(obstacleElement) {
-    if (isLevelOver || obstacleElement.classList.contains('removed')) return;
+    if (isLevelOver || isGamePaused || obstacleElement.classList.contains('removed')) return;
 
     const tractorCenter = getTractorCenter();
     const obstacleRect = obstacleElement.getBoundingClientRect();
     const gameRect = gameArea.getBoundingClientRect();
 
-    // Centro do obstáculo (absoluto na área de jogo)
     const obstacleX = obstacleRect.left + obstacleRect.width / 2 - gameRect.left;
     const obstacleY = obstacleRect.top + obstacleRect.height / 2 - gameRect.top;
 
-    // Distância do trator para o obstáculo
     const distance = Math.sqrt(Math.pow(tractorCenter.x - obstacleX, 2) + Math.pow(tractorCenter.y - obstacleY, 2));
 
     if (distance < OBSTACLE_CLICK_RADIUS) {
         obstacleElement.classList.add('removed');
         obstaclesRemoved++;
-        console.log(`Obstáculo removido! Total removido: ${obstaclesRemoved}/${totalObstacles}`);
     } else {
         alert('Chegue mais perto com o trator para remover este obstáculo!');
     }
 }
 
 function handleKeyDown(event) {
-    if (isLevelOver) return;
+    if (isLevelOver || isGamePaused) return;
 
     switch (event.key) {
         case 'w':
@@ -158,10 +183,27 @@ function handleKeyDown(event) {
     }
 }
 
+function togglePause() {
+    if (isLevelOver) return;
+
+    isGamePaused = !isGamePaused;
+    const img = btnPause.querySelector('img');
+
+    if (isGamePaused) {
+        clearInterval(timerIntervalF1);
+        img.src = 'itens_jogo_img/Play.png';
+        img.alt = 'Continuar';
+    } else {
+        startTimerF1();
+        img.src = 'itens_jogo_img/pause.png';
+        img.alt = 'Pausar';
+    }
+}
+
 function startTimerF1() {
     if (!timerDisplay) return;
 
-    startTimeF1 = Date.now();
+    if (timerIntervalF1) clearInterval(timerIntervalF1);
     
     timerIntervalF1 = setInterval(() => {
         timeRemainingF1--;
@@ -173,7 +215,7 @@ function startTimerF1() {
 
         if (timeRemainingF1 <= 0) {
             clearInterval(timerIntervalF1);
-            endLevelF1(false); // Termina por tempo esgotado
+            endLevelF1(false); 
         }
     }, 1000);
 }
@@ -182,14 +224,12 @@ function calculateScoreF1(durationSeconds) {
     let stars = 0;
     let performance = "requer atenção redobrada";
     
-    // Se não removeu todos os obstáculos, não ganha estrelas
     if (totalObstacles !== obstaclesRemoved) {
         stars = 0;
-        performance = "requer atenção redobrada";
+        performance = "requer atenção redobrada (obstáculos restantes)";
         return { durationSeconds, obstaclesRemoved, totalObstacles, stars, performance };
     }
     
-    // Pontuação baseada no tempo
     if (durationSeconds <= 60) {
         stars = 3;
         performance = "bom";
@@ -210,10 +250,10 @@ function endLevelF1(completed) {
     clearInterval(timerIntervalF1);
     document.removeEventListener('keydown', handleKeyDown);
 
-    const durationSeconds = completed ? Math.round((Date.now() - startTimeF1) / 1000) : TIME_LIMIT_F1;
+    const durationSeconds = TIME_LIMIT_F1 - timeRemainingF1;
+    
     const { stars, performance } = calculateScoreF1(durationSeconds);
 
-    // 1. Gera o conteúdo do arquivo TXT
     const statsContent = `
 NÍVEL 1 - PREPARO DO SOLO
 =========================================
@@ -225,13 +265,11 @@ Estrelas Ganhas: ${stars}
 =========================================
     `;
     
-    // 2. Download do arquivo
     console.log("Estatísticas do Nível 1 geradas:", statsContent);
     if (typeof downloadStatsFile === 'function') {
         downloadStatsFile(statsContent, 'estatisticas_nivel1.txt');
     }
 
-    // 3. Desbloqueia o próximo nível
     if (stars > 0) {
         if (typeof unlockNextLevel === 'function') {
             unlockNextLevel(2); 
@@ -239,7 +277,7 @@ Estrelas Ganhas: ${stars}
     }
 
     alert(`Nível 1 Finalizado!
-    Status: ${completed ? 'Completo' : 'Tempo Esgotado'}
+    Status: ${completed ? 'Chegou ao Fim' : 'Tempo Esgotado'}
     Obstáculos removidos: ${obstaclesRemoved}/${totalObstacles}
     Estrelas: ${stars} (${performance})
     Redirecionando para a tela de Níveis...`);
@@ -251,15 +289,17 @@ function initializePlowingScreen() {
     const plowingScreen = document.getElementById('plowing-screen');
     if (!plowingScreen) return;
     
-    // Inicializa elementos DOM
     tractorContainer = document.getElementById('tractor-container');
     gameArea = document.getElementById('game-area-fase1');
     timerDisplay = document.getElementById('timer-display');
+    btnPause = document.getElementById('btn-pause');
     
-    // Inicializa a posição do trator
+    if (btnPause) {
+        btnPause.addEventListener('click', togglePause);
+    }
+
     updateTractorPosition();
     
-    // Coleta e configura os obstáculos
     const obstacleElements = document.querySelectorAll('.obstacle');
     totalObstacles = obstacleElements.length;
 
@@ -268,14 +308,11 @@ function initializePlowingScreen() {
         obstacles.push(obs);
     });
 
-    // Configura os controles de teclado
     document.addEventListener('keydown', handleKeyDown);
     
-    // Inicia o temporizador
     startTimerF1();
 }
 
-// Inicializa a fase 1 quando a página for carregada
 document.addEventListener('DOMContentLoaded', () => {
     initializePlowingScreen();
 });

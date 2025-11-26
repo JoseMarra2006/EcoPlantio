@@ -44,7 +44,6 @@ body {
 #game-area-fase1 {
     width: 80%; 
     height: 100%;
-    /* Fundo background2.png */
     background-image: url('../itens_jogo_img/backgrouds/background2.png'); 
     background-size: cover;
     background-position: center;
@@ -76,7 +75,7 @@ body {
 
 #timer-display {
     position: absolute;
-    left: 10px;
+    left: -5px;
     background-color: #0082fc;
     color: white;
     font-size: 1.5em;
@@ -93,7 +92,6 @@ body {
     padding: 0;
     cursor: pointer;
     transition: transform 0.2s;
-    /* Margem para separar do temporizador */
     margin-left: 20px; 
 }
 
@@ -131,7 +129,6 @@ body {
 
 #tractor-container {
     position: absolute;
-    /* Posição inicial será definida pelo JS, mas aqui fica um padrão */
     top: 85%; 
     left: 5%; 
     transform: translate(-50%, -50%);
@@ -139,13 +136,16 @@ body {
     align-items: center;
     justify-content: center;
     transition: top 0.1s linear, left 0.1s linear; 
-    z-index: 10; /* Trator acima das setas */
+    z-index: 10; 
+    width: 230px; 
+    height: auto;
 }
 
 #tractor-full {
     width: 230px; 
     height: auto;
     transition: transform 0.2s; 
+    max-width: none;
 }
 
 /* Rotação do Trator Completo */
@@ -154,7 +154,6 @@ body {
 }
 
 .facing-left #tractor-full { 
-    /* Espelha horizontalmente para não ficar de cabeça para baixo */
     transform: scaleX(-1); 
 }
 
@@ -189,7 +188,7 @@ body {
 .obstacle.stick {
     width: 80px; 
     height: 80px;
-    background-image: url('../itens_jogo_img/nivel_1/galhoSeco.png'); 
+    background-image: url('../itens_jogo_img/nivel_1/galho.png'); 
     background-color: transparent; 
     transform: none;
 }
@@ -209,162 +208,42 @@ body {
 
 .path-segment {
     position: absolute;
-    height: 20px; /* Altura da flecha */
-    object-fit: contain; /* Garante que a flecha não distorça */
+    height: 20px; 
+    object-fit: contain; 
 }
 
-/* CONFIGURAÇÃO DO ZIG-ZAGUE (De baixo para cima) */
+/* CONFIGURAÇÃO DO ZIG-ZAGUE */
+.segment-1 { top: 82%; left: 38%; width: 80%; transform: rotate(0deg); } 
+.segment-10 { top: 82%; left: -28%; width: 120%; transform: rotate(0deg); }
+.segment-11 { top: 82%; left: -5%; width: 100%; transform: rotate(0deg); }
+.segment-12 { top: 82%; left: 10%; width: 100%; transform: rotate(0deg); }
 
-/* 1. Linha Inferior (Esquerda -> Direita) */
-.segment-1 { 
-    top: 82%; 
-    left: 38%; 
-    width: 80%; 
-    transform: rotate(0deg); /* Aponta para direita */
-} 
+.segment-2 { top: 70%; right: 8%; width: 100px; transform: rotate(-90deg); }
+.segment-30 { top: 58%; right: -30%; width: 100%; transform: rotate(-180deg); }
+.segment-31 { top: 58%; right: -10%; width: 100%; transform: rotate(-180deg); }
+.segment-32 { top: 58%; right: 10%; width: 100%; transform: rotate(-180deg); }
 
-.segment-10 {
-    top: 82%;
-    left: -28%;
-    width: 120%;
-    transform: rotate(0deg);
-}
+.segment-3 { top: 58%; left: -23%; width: 80%; transform: rotate(180deg); } 
 
-.segment-11 {
-    top: 82%;
-    left: -5%;
-    width: 100%;
-    transform: rotate(0deg);
-}
+.segment-4 { top: 46%; left: 2%; width: 100px; transform: rotate(-90deg); }
 
-.segment-12 {
-    top: 82%;
-    left: 10%;
-    width: 100%;
-    transform: rotate(0deg);
-}
+.segment-5 { top: 34%; left: 30%; width: 100%; transform: rotate(0deg); }
+.segment-50 { top: 34%; left: -35%; width: 100%; transform: rotate(0deg); }
+.segment-51 { top: 34%; left: -10%; width: 100%; transform: rotate(0deg); }
+.segment-52 { top: 34%; left: 10%; width: 100%; transform: rotate(0deg); }
 
-/* 2. Subida Direita */
-.segment-2 { 
-    top: 70%; 
-    right: 8%; /* Canto direito */
-    width: 100px; 
-    transform: rotate(-90deg); /* Aponta para cima */
-}
+.segment-6 { top: 22%; right: 8%; width: 100px; transform: rotate(-90deg); }
 
-.segment-30 {
-    top: 58%;
-    right: -30%;
-    width: 100%;
-    transform: rotate(-180deg);
-}
+.segment-7 { top: 10%; left: -20%; width: 80%; transform: rotate(180deg); }
+.segment-70 { top: 10%; left: -7%; width: 100%; transform: rotate(180deg); }
+.segment-71 { top: 10%; left: 10%; width: 100%; transform: rotate(180deg); }
+.segment-72 { top: 10%; left: 28%; width: 100%; transform: rotate(180deg); }
 
-.segment-31 {
-    top: 58%;
-    right: -10%;
-    width: 100%;
-    transform: rotate(-180deg);
-}
-
-.segment-32 {
-    top: 58%;
-    right: 10%;
-    width: 100%;
-    transform: rotate(-180deg);
-}
-
-/* 3. Linha Meio-Baixo (Direita -> Esquerda) */
-.segment-3 { 
-    top: 58%; 
-    left: -23%; /* Vai até a esquerda */
-    width: 80%; 
-    transform: rotate(180deg); /* Aponta para esquerda */
-} 
-
-/* 4. Subida Esquerda */
-.segment-4 { 
-    top: 46%; 
-    left: 2%; /* Canto esquerdo */
-    width: 100px; 
-    transform: rotate(-90deg); /* Aponta para cima */
-}
-
-/* 5. Linha Meio-Cima (Esquerda -> Direita) */
-.segment-5 { 
-    top: 34%; 
-    left: 30%; 
-    width: 100%; 
-    transform: rotate(0deg); /* Aponta para direita */
-}
-
-.segment-50 {
-    top: 34%;
-    left: -35%;
-    width: 100%;
-    transform: rotate(0deg);
-}
-
-.segment-51 {
-    top: 34%;
-    left: -10%;
-    width: 100%;
-    transform: rotate(0deg);
-}
-
-.segment-52 {
-    top: 34%;
-    left: 10%;
-    width: 100%;
-    transform: rotate(0deg);
-}
-
-
-/* 6. Subida Direita Superior */
-.segment-6 { 
-    top: 22%; 
-    right: 8%; 
-    width: 100px; 
-    transform: rotate(-90deg); 
-}
-
-/* 7. Linha Superior Final (Direita -> Esquerda) */
-.segment-7 { 
-    top: 10%; 
-    left: -20%; 
-    width: 80%; 
-    transform: rotate(180deg); /* Aponta para esquerda */
-}
-
-.segment-70 {
-    top: 10%; 
-    left: -7%; 
-    width: 100%; 
-    transform: rotate(180deg);
-}
-
-.segment-71 {
-    top: 10%; 
-    left: 10%; 
-    width: 100%; 
-    transform: rotate(180deg);
-}
-
-.segment-72 {
-    top: 10%; 
-    left: 28%; 
-    width: 100%; 
-    transform: rotate(180deg);
-}
-
-
-/* Segmentos não utilizados ocultos */
-.segment-8, .segment-9 { 
-    display: none; 
-} 
+.segment-8, .segment-9 { display: none; } 
 
 #end-marker {
     position: absolute;
-    top: 5%; /* Canto Superior Esquerdo */
+    top: 5%; 
     left: 2%; 
     width: 100px;
     height: auto;
