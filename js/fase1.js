@@ -1,18 +1,18 @@
 // Constantes do Nível 1
 const TIME_LIMIT_F1 = 5 * 60; // 5 minutos em segundos
 const TRACTOR_SPEED = 5; // Pixels por movimento
-const OBSTACLE_CLICK_RADIUS = 150; // Raio de clique
-const COLLISION_RADIUS = 105; // Raio de colisão
+const OBSTACLE_CLICK_RADIUS = 150; 
+const COLLISION_RADIUS = 105;
 
 let timeRemainingF1 = TIME_LIMIT_F1;
 let timerIntervalF1 = null;
 
 // Posição Inicial: Canto Inferior Esquerdo
-let tractorX = 5;  // %
-let tractorY = 82; // % 
+let tractorX = 5; 
+let tractorY = 82;  
 
 let isMoving = false;
-let currentDirection = 'right'; // Começa indo para a direita
+let currentDirection = 'right';
 let obstaclesRemoved = 0;
 let totalObstacles = 0;
 let isLevelOver = false;
@@ -46,29 +46,23 @@ function updateTractorPosition() {
     }
 }
 
-// Função para verificar colisão com obstáculos ativos
 function checkCollision(newXPercent, newYPercent) {
     if (!gameArea) return false;
 
     const gameRect = gameArea.getBoundingClientRect();
-    // Converte a posição proposta (%) para pixels relativos à área de jogo
     const proposedPixelX = (newXPercent / 100) * gameRect.width;
     const proposedPixelY = (newYPercent / 100) * gameRect.height;
 
     for (const obs of obstacles) {
-        // Ignora obstáculos já removidos
         if (obs.classList.contains('removed')) continue;
 
         const obsRect = obs.getBoundingClientRect();
-        // Centro do obstáculo relativo à área de jogo
         const obsCenterX = (obsRect.left + obsRect.width / 2) - gameRect.left;
         const obsCenterY = (obsRect.top + obsRect.height / 2) - gameRect.top;
-
-        // Distância entre o centro proposto do trator e o centro do obstáculo
         const dist = Math.sqrt(Math.pow(proposedPixelX - obsCenterX, 2) + Math.pow(proposedPixelY - obsCenterY, 2));
 
         if (dist < COLLISION_RADIUS) {
-            return true; // Colisão detectada
+            return true;
         }
     }
     return false;
@@ -107,8 +101,6 @@ function moveTractor(direction) {
             break;
     }
 
-    // Verifica Limites E Colisão
-    // ALTERAÇÃO AQUI: newX <= 85 impede invasão da barra lateral
     if (newX >= 2 && newX <= 85 && newY >= 2 && newY <= 95) {
         if (!checkCollision(newX, newY)) {
             tractorX = newX;
@@ -116,7 +108,7 @@ function moveTractor(direction) {
             updateTractorPosition();
             checkFinishLine();
         } else {
-            // Opcional: Feedback de colisão
+            // Colisão detectada, não move
         }
     }
 }
@@ -251,12 +243,16 @@ function endLevelF1(completed) {
     document.removeEventListener('keydown', handleKeyDown);
 
     const durationSeconds = TIME_LIMIT_F1 - timeRemainingF1;
-    
     const { stars, performance } = calculateScoreF1(durationSeconds);
 
+    // Recupera o nome do jogador do localStorage
+    const playerName = localStorage.getItem('EcoPlantio_PlayerName') || "Jogador Anônimo";
+
+    // Gera o conteúdo do arquivo TXT (Agora incluindo o nome do jogador)
     const statsContent = `
 NÍVEL 1 - PREPARO DO SOLO
 =========================================
+Jogador: ${playerName}
 Status: ${completed ? 'Completo' : 'Tempo Esgotado'}
 Tempo Total (segundos): ${durationSeconds}
 Obstáculos Removidos: ${obstaclesRemoved}/${totalObstacles}
@@ -265,10 +261,14 @@ Estrelas Ganhas: ${stars}
 =========================================
     `;
     
-    console.log("Estatísticas do Nível 1 geradas:", statsContent);
-    if (typeof downloadStatsFile === 'function') {
-        downloadStatsFile(statsContent, 'estatisticas_nivel1.txt');
-    }
+    // Função para baixar o arquivo .txt
+    const blob = new Blob([statsContent], { type: 'text/plain' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `Relatorio_Nivel1_${playerName}.txt`; // Nome do arquivo personalizado
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 
     if (stars > 0) {
         if (typeof unlockNextLevel === 'function') {
@@ -280,6 +280,7 @@ Estrelas Ganhas: ${stars}
     Status: ${completed ? 'Chegou ao Fim' : 'Tempo Esgotado'}
     Obstáculos removidos: ${obstaclesRemoved}/${totalObstacles}
     Estrelas: ${stars} (${performance})
+    O relatório foi baixado no seu computador.
     Redirecionando para a tela de Níveis...`);
 
     window.location.href = 'niveis.html';
