@@ -280,7 +280,7 @@ Estrelas Ganhas: ${stars}
 
     // 3. Simula o avanço de nível (Desbloqueia o Nível 3)
     if (stars > 0) {
-        unlockNextLevel(3);
+        unlockNextLevel(4);
     }
 
     alert(`Nível 3 Finalizado!

@@ -1,0 +1,232 @@
+/* RESET DAS PÁGINAS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* Incluído para manter a consistência do projeto */
+    font-family: 'Poppins', sans-serif;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    overflow: hidden; 
+}
+
+/* --- FASE 1: PREPARO DO SOLO (fase1.html) --- */
+
+#plowing-screen {
+    height: 100vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    padding: 0;
+    max-width: none; 
+}
+
+#game-area-fase1 {
+    width: 80%; 
+    height: 100%;
+    /* Fundo de terra arado/preparado (Imagem: unnamed.jpg) */
+    background-image: url('../unnamed.jpg'); 
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    /* Alinhando com a imagem original, ajustei o background para um padrão de solo mais simples da pasta para melhor controle dos elementos, se quiser o fundo exato use 'unnamed.jpg' */
+    background-image: url('../itens_jogo_img/backgrouds/background3.png'); 
+    background-size: 100% 100%;
+}
+
+#sidebar-fase1 {
+    width: 20%; 
+    height: 100%;
+    min-width: 200px; 
+    background-color: #d8f5d8; 
+    padding: 20px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Elementos do Topo da Sidebar (Timer e Botões) */
+.sidebar-top {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end; 
+    align-items: center;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+#timer-display {
+    position: absolute;
+    left: 10px;
+    background-color: #0082fc;
+    color: white;
+    font-size: 1.5em;
+    font-weight: 600;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 3px solid #005bb5;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+.game-icon-button {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: transform 0.2s;
+    margin-left: 10px;
+}
+
+.game-icon-button img {
+    width: 40px; 
+    height: auto;
+}
+
+.game-icon-button:hover img {
+    transform: scale(1.1);
+}
+
+/* Painel de Instruções (WASD e Mouse) */
+.instruction-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.control-group {
+    text-align: center;
+}
+
+.control-group img {
+    width: 100%;
+    max-width: 150px; 
+    height: auto;
+    margin: 0 auto;
+}
+
+
+/* --- Elementos do Jogo na Área de Jogo --- */
+
+#tractor-container {
+    position: absolute;
+    top: 50%; /* Posição inicial do trator (ajustada com JS) */
+    left: 10%; 
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s linear; /* Para movimento suave */
+}
+
+#tractor {
+    width: 100px; /* Tamanho do trator */
+    height: auto;
+    transform: rotate(270deg); /* Começa olhando para cima */
+    position: relative;
+    z-index: 2;
+}
+
+#plow-attachment {
+    width: 120px; /* Tamanho do arado */
+    height: auto;
+    position: absolute;
+    left: -110px; /* Posicionado atrás do trator */
+    z-index: 1;
+    transform: rotate(90deg); /* Alinhado horizontalmente */
+}
+
+/* Rotaciona o arado junto com o trator para todas as direções */
+.facing-up #tractor { transform: rotate(0deg); }
+.facing-up #plow-attachment { left: 0; top: -100px; transform: rotate(0deg); } 
+
+.facing-down #tractor { transform: rotate(180deg); }
+.facing-down #plow-attachment { left: 0; top: 100px; transform: rotate(180deg); } 
+
+.facing-left #tractor { transform: rotate(270deg); }
+.facing-left #plow-attachment { left: -100px; top: 0; transform: rotate(270deg); } 
+
+.facing-right #tractor { transform: rotate(90deg); }
+.facing-right #plow-attachment { left: 100px; top: 0; transform: rotate(90deg); } 
+
+
+/* Obstáculos (Pedras e Gravetos) */
+.obstacle {
+    position: absolute;
+    cursor: pointer;
+    background-size: contain;
+    background-repeat: no-repeat;
+    transition: opacity 0.3s;
+    z-index: 5;
+}
+
+/* Estilo para Pedras (Rock) - Simulação do ícone de pedra */
+.obstacle.rock {
+    width: 40px;
+    height: 40px;
+    /* Usei um placeholder de cor cinza para simular a pedra, 
+    já que não há um arquivo de pedra na lista de itens, apenas na imagem de fundo. 
+    Se você tiver a imagem, substitua o background-color. */
+    background-color: #6c757d; 
+    border-radius: 50%;
+}
+
+/* Estilo para Gravetos (Stick) - Simulação do ícone de graveto */
+.obstacle.stick {
+    width: 50px;
+    height: 20px;
+    /* Usei um placeholder de cor marrom para simular o graveto. */
+    background-color: #8b4513; 
+    transform: rotate(45deg);
+}
+
+.obstacle.removed {
+    opacity: 0;
+    pointer-events: none; /* Não pode ser clicado após a remoção */
+}
+
+/* Pista de Caminho (Flechas) */
+#track-path {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0.5;
+}
+
+.path-segment {
+    position: absolute;
+    width: 150px;
+    height: 50px;
+    object-fit: contain;
+}
+/* Posicionamento dos segmentos do caminho (Ajuste fino necessário para corresponder à imagem) */
+.segment-1 { top: 50px; left: 10%; transform: rotate(90deg); } 
+.segment-2 { top: 50px; left: 30%; transform: rotate(180deg); width: 450px; } /* Horizontal mais longo */
+.segment-3 { top: 50px; right: 10%; transform: rotate(-90deg); } 
+.segment-4 { top: 100px; right: 10%; transform: rotate(180deg); width: 700px; }
+.segment-5 { top: 100px; left: 10%; transform: rotate(90deg); }
+.segment-6 { top: 200px; left: 10%; transform: rotate(0deg); width: 450px; }
+.segment-7 { top: 200px; left: 45%; transform: rotate(-90deg); }
+.segment-8 { top: 300px; left: 45%; transform: rotate(180deg); width: 700px; }
+.segment-9 { bottom: 50px; left: 10%; transform: rotate(-90deg); } 
+
+#end-marker {
+    position: absolute;
+    top: 50px; 
+    left: 5%; 
+    width: 100px;
+    height: auto;
+    z-index: 10;
+}
