@@ -240,12 +240,14 @@ function endLevelF1(completed) {
     document.removeEventListener('keydown', handleKeyDown);
 
     const durationSeconds = TIME_LIMIT_F1 - timeRemainingF1;
-    
     const { stars, performance } = calculateScoreF1(durationSeconds);
+
+    const playerName = localStorage.getItem('EcoPlantio_PlayerName') || "Jogador Anônimo";
 
     const statsContent = `
 NÍVEL 1 - PREPARO DO SOLO
 =========================================
+Jogador: ${playerName}
 Status: ${completed ? 'Completo' : 'Tempo Esgotado'}
 Tempo Total (segundos): ${durationSeconds}
 Obstáculos Removidos: ${obstaclesRemoved}/${totalObstacles}
@@ -254,10 +256,13 @@ Estrelas Ganhas: ${stars}
 =========================================
     `;
     
-    console.log("Estatísticas do Nível 1 geradas:", statsContent);
-    if (typeof downloadStatsFile === 'function') {
-        downloadStatsFile(statsContent, 'estatisticas_nivel1.txt');
-    }
+    const blob = new Blob([statsContent], { type: 'text/plain' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = `Relatorio_Nivel1_${playerName}.txt`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
 
     if (stars > 0) {
         if (typeof unlockNextLevel === 'function') {
@@ -269,6 +274,7 @@ Estrelas Ganhas: ${stars}
     Status: ${completed ? 'Chegou ao Fim' : 'Tempo Esgotado'}
     Obstáculos removidos: ${obstaclesRemoved}/${totalObstacles}
     Estrelas: ${stars} (${performance})
+    O relatório foi baixado no seu computador.
     Redirecionando para a tela de Níveis...`);
 
     window.location.href = 'niveis.html';
