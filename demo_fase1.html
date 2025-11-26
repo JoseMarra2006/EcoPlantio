@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Demonstração do Nível</title>
-    <link rel="stylesheet" href="css/fase2.css">
+    <link rel="stylesheet" href="css/nivel1.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
@@ -26,6 +26,15 @@
             <button class="icon-button-demo" onclick="window.location.href='niveis.html'">
                 <img src="itens_jogo_img/botoes/x.png" alt="Sair">
             </button>
+
+            <video id="demo-video">
+                <source src="vídeos_jogo/demo_nível1.mp4" type="video/mp4">
+                Seu navegador não suporta a tag de vídeo.
+            </video>
+
+            <button id="btn-play-pause" class="video-control-button">
+                <img src="itens_jogo_img/Play.png" alt="Reproduzir">
+            </button>
         </div>
 
         <button id="btn-skip" class="main-action-button skip-button" onclick="window.location.href='fase1.html'">
@@ -34,6 +43,6 @@
         
     </div>
     
-    <script src="js/script.js"></script>
+    <script src="js/fase1.js"></script>
 </body>
 </html>

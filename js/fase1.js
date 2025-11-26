@@ -311,3 +311,30 @@ function initializePlowingScreen() {
 document.addEventListener('DOMContentLoaded', () => {
     initializePlowingScreen();
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    const video = document.getElementById('demo-video');
+    const btnPlayPause = document.getElementById('btn-play-pause');
+    
+    if (video && btnPlayPause) {
+        const icon = btnPlayPause.querySelector('img');
+
+        btnPlayPause.addEventListener('click', () => {
+            if (video.paused) {
+                video.play();
+                icon.src = 'itens_jogo_img/pause.png'; 
+                icon.alt = 'Pausar';
+            } else {
+                video.pause();
+                icon.src = 'itens_jogo_img/Play.png'; 
+                icon.alt = 'Reproduzir';
+            }
+        });
+        
+        video.addEventListener('ended', () => {
+            icon.src = 'itens_jogo_img/Play.png';
+            icon.alt = 'Reproduzir';
+        });
+    }
+});
