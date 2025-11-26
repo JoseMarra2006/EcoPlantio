@@ -4,14 +4,89 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fase 1 - Preparo do Solo</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/nivel1.css"> 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
+    <div class="container" id="plowing-screen">
         
-        //fase do preparo do solo
-        //desenvolva aqui dentro do container 
+        <div id="game-area-fase1">
+            <div id="track-path">
+                <img src="itens_jogo_img/nivel_1/flexa.png" alt="Seta" class="path-segment segment-1">
+                <img src="itens_jogo_img/nivel_1/flechacortada.png" alt="Seta cortada" class="path-segment segment-10">
+                <img src="itens_jogo_img/nivel_1/flechacortada.png" alt="Seta cortada" class="path-segment segment-11">
+                <img src="itens_jogo_img/nivel_1/flechacortada.png" alt="Seta cortada" class="path-segment segment-12">
+                <img src="itens_jogo_img/nivel_1/flexa.png" alt="Seta" class="path-segment segment-2">
+                <img src="itens_jogo_img/nivel_1/flexa.png" alt="Seta" class="path-segment segment-3">
+                <img src="itens_jogo_img/nivel_1/flechacortada.png" alt="Seta cortada" class="path-segment segment-30">
+                <img src="itens_jogo_img/nivel_1/flechacortada.png" alt="Seta cortada" class="path-segment segment-31">
+                <img src="itens_jogo_img/nivel_1/flechacortada.png" alt="Seta cortada" class="path-segment segment-32">
+                <img src="itens_jogo_img/nivel_1/flexa.png" alt="Seta" class="path-segment segment-4">
+                <img src="itens_jogo_img/nivel_1/flexa.png" alt="Seta" class="path-segment segment-5">
+                <img src="itens_jogo_img/nivel_1/flechacortada.png" alt="Seta cortada" class="path-segment segment-50">
+                <img src="itens_jogo_img/nivel_1/flechacortada.png" alt="Seta cortada" class="path-segment segment-51">
+                <img src="itens_jogo_img/nivel_1/flechacortada.png" alt="Seta cortada" class="path-segment segment-52">
+                <img src="itens_jogo_img/nivel_1/flexa.png" alt="Seta" class="path-segment segment-6">
+                <img src="itens_jogo_img/nivel_1/flexa.png" alt="Seta" class="path-segment segment-7">
+                <img src="itens_jogo_img/nivel_1/flechacortada.png" alt="Seta cortada" class="path-segment segment-70">
+                <img src="itens_jogo_img/nivel_1/flechacortada.png" alt="Seta cortada" class="path-segment segment-71">
+                <img src="itens_jogo_img/nivel_1/flechacortada.png" alt="Seta cortada" class="path-segment segment-72">
+                <img src="itens_jogo_img/nivel_1/flexa.png" alt="Seta" class="path-segment segment-8">
+                <img src="itens_jogo_img/nivel_1/flexa.png" alt="Seta" class="path-segment segment-9">
+            </div>
+
+            <img src="itens_jogo_img/nivel_1/fim.png" alt="Fim do Nível" id="end-marker">
+            
+            <div id="tractor-container">
+                <img src="itens_jogo_img/nivel_1/tratorCompleto.png" alt="Trator com Arado" id="tractor-full">
+            </div>
+
+            <div class="obstacle rock" data-type="rock" style="top: 82%; left: 30%;"></div>
+            <div class="obstacle stick" data-type="stick" style="top: 82%; left: 60%;"></div>
+            
+            <div class="obstacle rock" data-type="rock" style="top: 58%; left: 70%;"></div>
+            <div class="obstacle stick" data-type="stick" style="top: 58%; left: 40%;"></div>
+            
+            <div class="obstacle rock" data-type="rock" style="top: 34%; left: 25%;"></div>
+            <div class="obstacle stick" data-type="stick" style="top: 34%; left: 55%;"></div>
+            <div class="obstacle rock" data-type="rock" style="top: 34%; left: 80%;"></div>
+
+            <div class="obstacle stick" data-type="stick" style="top: 10%; left: 60%;"></div>
+            <div class="obstacle rock" data-type="rock" style="top: 10%; left: 30%;"></div>
+        </div>
+
+        <div id="sidebar-fase1">
+            
+            <div class="sidebar-top">
+                <div id="timer-display">05:00</div>
+                <button id="btn-pause" class="game-icon-button">
+                    <img src="itens_jogo_img/pause.png" alt="Pausar">
+                </button>
+                <button id="btn-settings-game" class="game-icon-button" onclick="window.location.href='configuracoes.html'">
+                    <img src="itens_jogo_img/botoes/btn_config.png" alt="Configurações">
+                </button>
+                <button id="btn-exit-game" class="game-icon-button" onclick="window.location.href='niveis.html'">
+                    <img src="itens_jogo_img/botoes/x.png" alt="Sair da Fase">
+                </button>
+            </div>
+
+            <div class="instruction-panel">
+                <div class="control-group">
+                    <img src="itens_jogo_img/WASD.png" alt="Controles WASD">
+                </div>
+                
+                <div class="control-group">
+                    <img src="itens_jogo_img/mouse.png" alt="Mouse para selecionar">
+                </div>
+            </div>
+            
+        </div>
         
     </div>
+
+    <script src="js/fase1.js"></script> 
+    <script src="js/script.js"></script> 
 </body>
 </html>

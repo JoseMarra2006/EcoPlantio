@@ -3,6 +3,7 @@
    - Cuidado ao mexer com os elementos genéricos (div, img...) para não prejudicar outras telas!
 */
 
+/* Favor não utilizar mais este código. Ele será finalizado para impedir extensão de código e conflitos */
 
 /* RESET DAS PÁGINAS */
 * {
@@ -496,3 +497,7 @@ body {
 .btn-voltar:hover img {
     transform: scale(1.05);
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> nível1
