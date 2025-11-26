@@ -1,20 +1,19 @@
-// js/fase2.js (Fase 2: Plantio Logic)
+const STORAGE_KEY = 'EcoPlantio_PlayerName';
+const LEVEL_STATUS_KEY = 'EcoPlantio_LevelStatus_UnlockedUpTo';
+const playerNameInput = document.getElementById('player-name');
+const btnPlay = document.getElementById('btn-play');
 
-// --- Constantes Globais de Nível e Armazenamento ---
-const LEVEL_STATUS_KEY = 'EcoPlantio_LevelStatus_UnlockedUpTo'; 
 const TOTAL_HOLES = 20;
-const TIME_LIMIT = 5 * 60; // 5 minutos em segundos
+const TIME_LIMIT = 5 * 60; 
 const HOLE_IMAGE_SRC = 'itens_jogo_img/nivel_2/buraco.png';
 const MOUND_IMAGE_SRC = 'itens_jogo_img/nivel_2/montinho_terra.png'; 
 
 let selectedSeedType = null;
-let holesStatus = []; // Array para rastrear o estado de cada cova: 'empty', 'boa', 'ruim'
+let holesStatus = []; 
 let timerInterval = null;
 let timeRemaining = TIME_LIMIT;
 let startTime = null;
-let isGamePaused = false;
-
-// --- Funções de Progresso Mínimas (Para auto-suficiência do Nível) ---
+let isGamePaused = false; 
 function getUnlockedLevel() {
     const unlockedLevel = localStorage.getItem(LEVEL_STATUS_KEY);
     return parseInt(unlockedLevel) || 1; 
@@ -27,13 +26,11 @@ function unlockNextLevel(levelNumber) {
     }
 }
 
-// --- Funções Específicas da Fase 2: Plantio ---
-
 function createHoleGrid() {
     const grid = document.getElementById('hole-grid');
     if (!grid) return;
     
-    // Inicializa o estado das 20 covas como 'empty'
+
     holesStatus = Array(TOTAL_HOLES).fill('empty');
     
     for (let i = 0; i < TOTAL_HOLES; i++) {
@@ -48,7 +45,7 @@ function createHoleGrid() {
 }
 
 function handlePlanting(index, buttonElement) {
-    if (isGamePaused) return;
+    if (isGamePaused) return; 
 
     if (holesStatus[index] !== 'empty') {
         return;
@@ -74,7 +71,8 @@ function handleSeedSelection() {
     const seedButtons = document.querySelectorAll('.seed-button');
     seedButtons.forEach(button => {
         button.addEventListener('click', (e) => {
-            if (isGamePaused) return;
+            if (isGamePaused) return; 
+            
             seedButtons.forEach(b => b.classList.remove('selected'));
             button.classList.add('selected');
             selectedSeedType = button.getAttribute('data-type');
@@ -83,25 +81,25 @@ function handleSeedSelection() {
 }
 
 function togglePause() {
-    // Altera o estado de pausa
+
     isGamePaused = !isGamePaused;
     const btnPause = document.getElementById('btn-pause');
     const img = btnPause ? btnPause.querySelector('img') : null;
 
     if (isGamePaused) {
-        // Pausa o timer
+
         if (timerInterval) {
             clearInterval(timerInterval);
         }
-        // Muda o ícone para Play
+
         if (img) {
             img.src = 'itens_jogo_img/Play.png';
             img.alt = 'Continuar';
         }
     } else {
-        // Continua o timer
+
         startTimer();
-        // Muda o ícone para Pause
+ 
         if (img) {
             img.src = 'itens_jogo_img/pause.png';
             img.alt = 'Pausar';
@@ -162,18 +160,13 @@ function downloadStatsFile(content, filename) {
     const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
     const link = document.createElement('a');
     
-    // 1. Cria a URL do objeto Blob
     link.href = URL.createObjectURL(blob);
-    // 2. Define o nome do arquivo a ser baixado
     link.download = filename;
     
-    // 3. Adiciona o link ao corpo do documento (necessário para o Firefox)
     document.body.appendChild(link); 
     
-    // 4. CLICA NO LINK PARA INICIAR O DOWNLOAD
     link.click(); 
 
-    // 5. Limpa a URL e remove o elemento após um pequeno atraso (para garantir o início do download)
     setTimeout(() => {
         URL.revokeObjectURL(link.href);
         document.body.removeChild(link);
@@ -188,9 +181,12 @@ function endLevel(completed) {
 
     const { planted, badSeeds, missing, stars, performance } = calculateScore();
 
+    const playerName = localStorage.getItem(STORAGE_KEY) || 'Jogador Desconhecido';
+
     const statsContent = `
 NÍVEL 2 - PLANTIO
 =========================================
+Jogador: ${playerName}
 Tempo Total (segundos): ${durationSeconds}
 Covas Preenchidas: ${planted}
 Sementes Ruins Plantadas: ${badSeeds}
@@ -221,7 +217,7 @@ Estrelas Ganhas: ${stars}
 function initializePlantingScreen() {
     createHoleGrid();
     handleSeedSelection();
-
+    
     const btnPause = document.getElementById('btn-pause');
     if (btnPause) {
         btnPause.addEventListener('click', togglePause);
@@ -230,7 +226,6 @@ function initializePlantingScreen() {
     startTimer();
 }
 
-// Inicialização da Fase 2
 document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('planting-screen')) {
         initializePlantingScreen();

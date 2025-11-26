@@ -3,8 +3,6 @@ const LEVEL_STATUS_KEY = 'EcoPlantio_LevelStatus_UnlockedUpTo';
 const playerNameInput = document.getElementById('player-name');
 const btnPlay = document.getElementById('btn-play');
 
-// --- Funções de Tela Inicial ---
-
 function loadAndCheckPlayerName() {
     if (playerNameInput && btnPlay) {
         const savedName = localStorage.getItem(STORAGE_KEY);
@@ -40,8 +38,6 @@ function handlePlayButtonClick() {
     }
 }
 
-// --- Funções de Controle de Nível (Globais) ---
-
 function getUnlockedLevel() {
     const unlockedLevel = localStorage.getItem(LEVEL_STATUS_KEY);
     return parseInt(unlockedLevel) || 1; 
@@ -53,7 +49,6 @@ function unlockNextLevel(levelNumber) {
         localStorage.setItem(LEVEL_STATUS_KEY, levelNumber);
     }
 
-    // Apenas recarrega se estiver na tela de níveis
     if (document.getElementById('levels-screen')) {
          window.location.reload(); 
     }
@@ -105,8 +100,6 @@ function initializeLevelsScreen() {
     
 }
 
-
-// Event Listener Principal para a Home e Níveis
 document.addEventListener('DOMContentLoaded', () => {
     if (document.getElementById('home-screen')) {
         loadAndCheckPlayerName();
