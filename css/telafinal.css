@@ -61,7 +61,6 @@ body {
     align-items: center;
     justify-content: center;
     padding: 20px;
-    margin-bottom: 19vh;
     margin-top: 13vh;
 }
 
@@ -104,4 +103,17 @@ body {
         1px -1px 0 #000,
        -1px  1px 0 #000,
         1px  1px 0 #000;
+}
+
+.btn-voltar {
+    background: none;
+    border: none;
+    max-width: 150px;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    cursor: pointer;
+}
+
+.btn-voltar:hover img {
+    transform: scale(1.05);
 }
