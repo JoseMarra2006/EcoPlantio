@@ -254,12 +254,19 @@ function calculateScore() {
     return { planted, badSeeds, missing, stars, performance };
 }
 
+function saveLevelStars(level, stars) {
+    const key = `EcoPlantio_Level_${level}_Stars`;
+    localStorage.setItem(key, stars);
+}
+
 function endLevel(completed) {
     const endTime = Date.now();
     const durationMs = endTime - startTime;
     const durationSeconds = Math.round(durationMs / 1000);
 
     const { planted, badSeeds, missing, stars, performance } = calculateScore();
+
+    saveLevelStars(3, stars);
 
     // 1. Gera o conteúdo do arquivo TXT (Estatísticas Detalhadas)
     const statsContent = `
@@ -278,9 +285,9 @@ Estrelas Ganhas: ${stars}
     console.log("Estatísticas do Nível 2 geradas:", statsContent);
     downloadStatsFile(statsContent, 'estatisticas_nivel2.txt');
 
-    // 3. Simula o avanço de nível (Desbloqueia o Nível 3)
+    // 3. Simula o avanço de nível (Desbloqueia o Nível 4)
     if (stars > 0) {
-        unlockNextLevel(3);
+        unlockNextLevel(4);
     }
 
     alert(`Nível 3 Finalizado!

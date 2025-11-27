@@ -1,17 +1,49 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estatísticas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chicle&family=DynaPuff:wght@400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
 </head>
+
 <body>
-    <div class="container">
-        
-        //Estatísticas
-        //desenvolva aqui dentro do container 
-        
+    <div class="container" id="settings-screen">
+
+        <div class="panels">
+            <div class="stats-panel" data-level="1">
+                <div class="level-title">NÍVEL 1</div>
+                <div class="stars" id="stars-1"></div>
+            </div>
+
+            <div class="stats-panel" data-level="2">
+                <div class="level-title">NÍVEL 2</div>
+                <div class="stars" id="stars-2"></div>
+            </div>
+
+            <div class="stats-panel" data-level="3">
+                <div class="level-title">NÍVEL 3</div>
+                <div class="stars" id="stars-3"></div>
+            </div>
+
+            <div class="stats-panel" data-level="4">
+                <div class="level-title">NÍVEL 4</div>
+                <div class="stars" id="stars-4"></div>
+            </div>
+
+        </div>
+
+        <button id="btn-back" class="back-button image-button" onclick="window.location.href='index.html'">
+            <img src="itens_jogo_img/botoes/btn_voltar.png" alt="Voltar">
+        </button>
+
     </div>
+
+    <script src="js/estatisticas.js"></script>
 </body>
+
 </html>

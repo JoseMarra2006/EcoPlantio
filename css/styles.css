@@ -190,6 +190,55 @@ body {
     height: auto;
 }
 
+/* --- TELA ESTATISTICAS (estatisticas.html) --- */
+
+/* --- GRID DE ESTATÍSTICAS (2x2) --- */
+
+.panels {
+    display: grid;
+    grid-template-columns: repeat(2, 350px);
+    grid-template-rows: repeat(2, 220px);
+    gap: 100px;
+    margin-top: 50px;
+    justify-content: center;  /* centraliza horizontalmente */
+}
+
+/* Painel individual */
+.stats-panel {
+    background-image: url('../itens_jogo_img/backgrouds/fundoNívelEstatística.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    border-radius: 20px; 
+    position: relative;  /* segue a estética do seu jogo */
+}
+
+.star-icon {
+    width: 90px;     /* ajuste como quiser */
+    height: 90px;
+    margin: 155px;
+    margin-top: 115px;
+    image-rendering: crisp-edges;
+}
+
+.level-title {
+    font-size: 28px;
+    font-weight: bold;
+    font-family: 'DynaPuff', system-ui;
+    color: white;
+    margin-bottom: 120px;
+}
+
+.stars {
+    display: flex;
+    gap: 18px;
+}
+
+
 /* --- TELA DE CONFIGURAÇÕES (configuracoes.html) --- */
 
 #settings-screen {

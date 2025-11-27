@@ -254,12 +254,20 @@ function calculateScore() {
     return { planted, badSeeds, missing, stars, performance };
 }
 
+function saveLevelStars(level, stars) {
+    const key = `EcoPlantio_Level_${level}_Stars`;
+    localStorage.setItem(key, stars);
+}
+
+
 function endLevel(completed) {
     const endTime = Date.now();
     const durationMs = endTime - startTime;
     const durationSeconds = Math.round(durationMs / 1000);
 
     const { planted, badSeeds, missing, stars, performance } = calculateScore();
+
+    saveLevelStars(2, stars);
 
     // 1. Gera o conteúdo do arquivo TXT (Estatísticas Detalhadas)
     const statsContent = `
