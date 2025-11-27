@@ -175,12 +175,20 @@ function downloadStatsFile(content, filename) {
     }, 100); 
 }
 
+function saveLevelStars(level, stars) {
+    const key = `EcoPlantio_Level_${level}_Stars`;
+    localStorage.setItem(key, stars);
+}
+
 function endLevel(completed) {
     isLevelOver = true;
     const endTime = Date.now();
     const durationSeconds = TIME_LIMIT - timeRemaining; 
 
     const { harvested, missing, stars, performance } = calculateScore();
+
+    saveLevelStars(4, stars);
+
     const playerName = localStorage.getItem(STORAGE_KEY) || 'Jogador Desconhecido';
 
     const statsContent = `

@@ -233,6 +233,11 @@ function calculateScoreF1(durationSeconds) {
     return { durationSeconds, obstaclesRemoved, totalObstacles, stars, performance };
 }
 
+function saveLevelStars(level, stars) {
+    const key = `EcoPlantio_Level_${level}_Stars`;
+    localStorage.setItem(key, stars);
+}
+
 function endLevelF1(completed) {
     if (isLevelOver) return;
     isLevelOver = true;
@@ -241,6 +246,8 @@ function endLevelF1(completed) {
 
     const durationSeconds = TIME_LIMIT_F1 - timeRemainingF1;
     const { stars, performance } = calculateScoreF1(durationSeconds);
+
+    saveLevelStars(1, stars);
 
     const playerName = localStorage.getItem('EcoPlantio_PlayerName') || "Jogador Anônimo";
 

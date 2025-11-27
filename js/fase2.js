@@ -172,6 +172,10 @@ function downloadStatsFile(content, filename) {
     }, 100); 
 }
 
+function saveLevelStars(level, stars) {
+    const key = `EcoPlantio_Level_${level}_Stars`;
+    localStorage.setItem(key, stars);
+}
 
 function endLevel(completed) {
     const endTime = Date.now();
@@ -179,6 +183,8 @@ function endLevel(completed) {
     const durationSeconds = Math.round(durationMs / 1000);
 
     const { planted, badSeeds, missing, stars, performance } = calculateScore();
+
+    saveLevelStars(2, stars);
 
     const playerName = localStorage.getItem(STORAGE_KEY) || 'Jogador Desconhecido';
 

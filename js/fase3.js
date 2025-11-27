@@ -170,9 +170,17 @@ function downloadStatsFile(content, filename) {
     }, 100);
 }
 
+function saveLevelStars(level, stars) {
+    const key = `EcoPlantio_Level_${level}_Stars`;
+    localStorage.setItem(key, stars);
+}
+
 function endLevel(completed) {
     const durationSeconds = TIME_LIMIT - timeRemaining;
     const { treated, badItems, missing, stars, performance } = calculateScore();
+
+    saveLevelStars(3, stars);
+
     const playerName = localStorage.getItem(STORAGE_KEY) || 'Jogador';
 
     const statsContent = `
