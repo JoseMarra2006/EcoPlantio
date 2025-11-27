@@ -489,7 +489,8 @@ body {
     background: none;
     border: none;
     max-width: 150px;
-
+    margin-top: 5vh;
+    margin-bottom: 5vh;
     cursor: pointer;
 }
 
