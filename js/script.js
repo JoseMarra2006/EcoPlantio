@@ -63,7 +63,7 @@ function initializeLevelsScreen() {
         1: { name: 'Preparo do Solo', link: 'demo_fase1.html' },
         2: { name: 'Plantio', link: 'demo_fase2.html' },
         3: { name: 'Adubação', link: 'fase3.html' },
-        4: { name: 'Colheita', link: 'fase4.html' }
+        4: { name: 'Colheita', link: 'demo_fase4.html' }
     };
     
     for (let i = 1; i <= totalLevels; i++) {

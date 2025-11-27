@@ -226,3 +226,62 @@ document.addEventListener('DOMContentLoaded', () => {
         initializeHarvestScreen();
     }
 });
+
+function initializePlowingScreen() {
+    const plowingScreen = document.getElementById('plowing-screen');
+    if (!plowingScreen) return;
+    
+    tractorContainer = document.getElementById('tractor-container');
+    gameArea = document.getElementById('game-area-fase1');
+    timerDisplay = document.getElementById('timer-display');
+    btnPause = document.getElementById('btn-pause');
+    
+    if (btnPause) {
+        btnPause.addEventListener('click', togglePause);
+    }
+
+    updateTractorPosition();
+    
+    const obstacleElements = document.querySelectorAll('.obstacle');
+    totalObstacles = obstacleElements.length;
+
+    obstacleElements.forEach(obs => {
+        obs.addEventListener('click', () => handleObstacleClick(obs));
+        obstacles.push(obs);
+    });
+
+    document.addEventListener('keydown', handleKeyDown);
+    
+    startTimerF1();
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    initializePlowingScreen();
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+
+    const video = document.getElementById('demo-video');
+    const btnPlayPause = document.getElementById('btn-play-pause');
+    
+    if (video && btnPlayPause) {
+        const icon = btnPlayPause.querySelector('img');
+
+        btnPlayPause.addEventListener('click', () => {
+            if (video.paused) {
+                video.play();
+                icon.src = 'itens_jogo_img/pause.png'; 
+                icon.alt = 'Pausar';
+            } else {
+                video.pause();
+                icon.src = 'itens_jogo_img/Play.png'; 
+                icon.alt = 'Reproduzir';
+            }
+        });
+        
+        video.addEventListener('ended', () => {
+            icon.src = 'itens_jogo_img/Play.png';
+            icon.alt = 'Reproduzir';
+        });
+    }
+});
