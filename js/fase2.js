@@ -212,7 +212,6 @@ Estrelas Ganhas: ${stars}
     window.location.href = 'niveis.html';
 }
 
-
 function initializePlantingScreen() {
     createHoleGrid();
     handleSeedSelection();

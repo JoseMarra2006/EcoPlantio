@@ -62,7 +62,7 @@ function initializeLevelsScreen() {
     const levelData = {
         1: { name: 'Preparo do Solo', link: 'demo_fase1.html' },
         2: { name: 'Plantio', link: 'demo_fase2.html' },
-        3: { name: 'Adubação', link: 'fase3.html' },
+        3: { name: 'Adubação', link: 'demo_fase3.html' },
         4: { name: 'Colheita', link: 'demo_fase4.html' }
     };
     
