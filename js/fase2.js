@@ -135,7 +135,6 @@ function calculateScore() {
     let stars = 0;
     let performance = "requer atenção redobrada";
     
-    // Critérios de Estrelas
     if (badSeeds === 0 && missing === 0) {
         stars = 3;
         performance = "bom";
@@ -197,7 +196,7 @@ Estrelas Ganhas: ${stars}
     `;
     
     console.log("Estatísticas do Nível 2 geradas:", statsContent);
-    downloadStatsFile(statsContent, 'estatisticas_nivel2.txt');
+    downloadStatsFile(statsContent, `Relatorio_Nivel2_${playerName}.txt`);
 
     if (stars > 0) {
         unlockNextLevel(3);
