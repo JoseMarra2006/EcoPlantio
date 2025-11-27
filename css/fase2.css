@@ -41,13 +41,12 @@ body {
     justify-content: space-between;
     align-items: stretch;
     padding: 0;
-    max-width: none; /* Permite que o container ocupe toda a largura da tela */
+    max-width: none;
 }
 
 #game-area {
-    width: 80%; /* Ocupa 80% da tela para a área de jogo */
+    width: 80%; 
     height: 100%;
-    /* Utiliza background3.png para o fundo de terra arado */
     background-image: url('../itens_jogo_img/backgrouds/background3.png'); 
     background-size: cover;
     background-position: center;
@@ -60,7 +59,6 @@ body {
     width: 20%; /* Ocupa 20% da tela para a barra lateral */
     height: 100%;
     min-width: 200px; 
-    /* Cor verde clara da barra lateral, conforme a imagem */
     background-color: #d8f5d8; 
     padding: 20px 10px;
     display: flex;
@@ -74,7 +72,7 @@ body {
 .sidebar-top {
     width: 100%;
     display: flex;
-    justify-content: flex-end; /* Alinha os botões à direita */
+    justify-content: flex-end; 
     align-items: center;
     position: relative;
     margin-bottom: 30px;
@@ -194,7 +192,6 @@ body {
 #demo-screen {
     height: 100vh;
     width: 100%;
-    /* Fundo background1.png (nuvens e céu) */
     background-image: url('../itens_jogo_img/backgrouds/background1.png');
     background-size: cover;
     background-position: center;
@@ -323,9 +320,9 @@ body {
 #video-placeholder video {
     width: 100%;
     height: 100%;
-    object-fit: fill; /* Preenche toda a caixa conforme pedido */
+    object-fit: fill;
     display: block;
-    border-radius: 5px; /* Arredondamento interno para casar com a borda de 10px */
+    border-radius: 5px;
 }
 
 .icon-button-demo {
@@ -346,32 +343,30 @@ body {
 
 /* --- ADIÇÕES PARA O VÍDEO E BOTÃO PLAY --- */
 
-/* Garante que o vídeo preencha a tela branca */
 #video-placeholder video {
     width: 100%;
     height: 100%;
     object-fit: fill;
-    border-radius: 5px; /* Arredondamento leve para casar com a borda */
+    border-radius: 5px; 
     display: block;
 }
 
-/* Estilo do botão Play/Pause centralizado na borda inferior */
 .video-control-button {
     position: absolute;
-    bottom: -40px; /* Puxa para baixo para ficar na linha da borda (ajuste se a imagem for maior/menor) */
+    bottom: -40px; 
     left: 50%;
-    transform: translateX(-50%); /* Centraliza horizontalmente */
+    transform: translateX(-50%);
     background: none;
     border: none;
     cursor: pointer;
-    z-index: 20; /* Garante que fique acima do vídeo e da borda */
+    z-index: 20; 
     transition: transform 0.2s;
 }
 
 .video-control-button img {
-    width: 60px; /* Tamanho do botão Play/Pause */
+    width: 60px;
     height: auto;
-    filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3)); /* Sombra para destacar */
+    filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));
 }
 
 .video-control-button:hover img {
