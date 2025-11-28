@@ -17,7 +17,7 @@ img {
 /* CONTAINER - estou colocando esse elemento para definir uma altura e largura máxima nas telas
 façam o código dentro do container e utilizem apenas o espaço da tela disponível (sem scroll) */
 .container {
-    max-width: 1400px; /* pode ser entre 960px e 1440px. */
+    max-width: 1400px; 
     min-height: 100%;
     margin: 0 auto;
     padding: 0 15px; 
